@@ -1,0 +1,1167 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="XbkMTn0NEANG-vDVITHx2Gnz8X7Yj0lvkXmj6291KDY" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript,设计模式," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="蓝岚爱肉肉" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="设计模式是前辈总结下来的一套经验和心血，学习设计模式，让我们代码的更加具备可重用性、可靠性，是工程化编程必不可缺的基石。不过遗憾的是，限于本人目前水平，这篇博文谈的不是涵盖所有23种传统设计模式，而是想说明平时在编写JavaScript中经常会用到的几种设计模式，有 单例模式、工厂模式、构造函数模式、混合模式、模块模式、发布订阅模式，以及具体编写JavaScript代码的一些小实践，使用设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅析几种设计模式">
+<meta property="og:url" content="http://licao404.com/2016/06/24/浅析几种设计模式/index.html">
+<meta property="og:site_name" content="蓝岚爱肉肉">
+<meta property="og:description" content="设计模式是前辈总结下来的一套经验和心血，学习设计模式，让我们代码的更加具备可重用性、可靠性，是工程化编程必不可缺的基石。不过遗憾的是，限于本人目前水平，这篇博文谈的不是涵盖所有23种传统设计模式，而是想说明平时在编写JavaScript中经常会用到的几种设计模式，有 单例模式、工厂模式、构造函数模式、混合模式、模块模式、发布订阅模式，以及具体编写JavaScript代码的一些小实践，使用设计模式">
+<meta property="og:image" content="http://7xrvo9.com1.z0.glb.clouddn.com/20160624/code211360.jpg">
+<meta property="og:updated_time" content="2016-07-01T17:02:44.066Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅析几种设计模式">
+<meta name="twitter:description" content="设计模式是前辈总结下来的一套经验和心血，学习设计模式，让我们代码的更加具备可重用性、可靠性，是工程化编程必不可缺的基石。不过遗憾的是，限于本人目前水平，这篇博文谈的不是涵盖所有23种传统设计模式，而是想说明平时在编写JavaScript中经常会用到的几种设计模式，有 单例模式、工厂模式、构造函数模式、混合模式、模块模式、发布订阅模式，以及具体编写JavaScript代码的一些小实践，使用设计模式">
+<meta name="twitter:image" content="http://7xrvo9.com1.z0.glb.clouddn.com/20160624/code211360.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6261706695056033000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://licao404.com/2016/06/24/浅析几种设计模式/"/>
+
+  <title> 浅析几种设计模式 | 蓝岚爱肉肉 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?50dccebe8271dcccd782178e2cdbbc52";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s95.cnzz.com/z_stat.php?id=1258087445&web_id=1258087445" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">蓝岚爱肉肉</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Gardon Lee's Blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-file-text"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+        <li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()    '>[High起来]</a> </li>
+
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '7PcwcK-5yqhMrUDyc-y-','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                浅析几种设计模式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-24T22:43:36+08:00" content="2016-06-24">
+              2016-06-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/编程学习/" itemprop="url" rel="index">
+                    <span itemprop="name">编程学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/编程学习/前端进阶/" itemprop="url" rel="index">
+                    <span itemprop="name">前端进阶</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/24/浅析几种设计模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/24/浅析几种设计模式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/06/24/浅析几种设计模式/" class="leancloud_visitors" data-flag-title="浅析几种设计模式">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://7xrvo9.com1.z0.glb.clouddn.com/20160624/code211360.jpg" alt=""></p>
+<blockquote class="blockquote-center">设计模式是前辈总结下来的一套经验和心血，学习设计模式，让我们代码的更加具备可重用性、可靠性，是工程化编程必不可缺的基石。不过遗憾的是，限于本人目前水平，这篇博文谈的不是涵盖所有23种传统设计模式，而是想说明平时在编写JavaScript中经常会用到的几种设计模式，有 <strong>单例模式</strong>、<strong>工厂模式</strong>、<strong>构造函数模式</strong>、<strong>混合模式</strong>、<strong>模块模式</strong>、<strong>发布订阅模式</strong>，以及具体编写JavaScript代码的一些小实践，使用设计模式编程是一种好习惯，了解其形成的原理更是我们关注的重点，好了，让我们开始吧！</blockquote>
+
+<a id="more"></a>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><p>从需求出发，什么情况下我们会用到单例模式呢？遇到过这样的场景：点击登录按钮时，页面弹出登录浮窗、或者点击操作按钮后，弹出确认弹窗，这里的登录窗和确认窗都是唯一的，无论点击多少次，这些弹窗只会被创建一次，这时候比较适合用单例模式来创建。</p>
+<p>传统的单例模式是用一个定义一个变量来标志是否已经创建过某个类的实例，判断之后，如果创建过则直接返回之前创建的实例。仔细看下面的demo，当监听到按钮点击事件后，创建 <code>createDialog</code> 的唯一实例，并让此实例的 <code>css</code> 属性发生改变：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> createDialog = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">var</span> div;</span><br><span class="line">     <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!div) &#123;</span><br><span class="line">             div = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line">             div.innerHTML = <span class="string">"&lt;h1&gt;I'm GardonLee&lt;/h1&gt;"</span>;</span><br><span class="line">             div.style.display = <span class="string">'none'</span>;</span><br><span class="line">             <span class="built_in">document</span>.body.appendChild(div);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> div;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">'loginBtn'</span>).onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">var</span> loginDialog = createDialog();  </span><br><span class="line">     loginDialog.style.display = <span class="string">'block'</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="工厂（方法）模式"><a href="#工厂（方法）模式" class="headerlink" title="工厂（方法）模式"></a>工厂（方法）模式</h3><p>工厂模式抽象了创建具体对象的过程，定义一个用于<strong>创建对象的接口</strong>，让子类决定实例化哪个类。由于在JavaScript中没有类的概念，我们使用一种函数（工厂方法）来封装以<strong>特定接口</strong>创建对象的细节，让这个方法来决定需要创建哪个类的实例，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createCompany</span>(<span class="params">position,obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> F2E = <span class="function"><span class="keyword">function</span> (<span class="params">name,age,sex</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">        <span class="keyword">this</span>.sex = sex;</span><br><span class="line">        <span class="keyword">this</span>.saySkills = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"HTML(5)、CSS(3)、JavaScript、Tools、Frameworks......"</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> UI = <span class="function"><span class="keyword">function</span> (<span class="params">name,age,sex</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">        <span class="keyword">this</span>.sex = sex;</span><br><span class="line">        <span class="keyword">this</span>.saySkills = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"美术基础、平面设计、交互设计、动效设计、前端相关......"</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(position === <span class="string">'F2E'</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> F2E(obj.name,obj.age,obj.sex);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (position === <span class="string">'UI'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> UI(obj.name,obj.age,obj.sex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> staff01 = <span class="keyword">new</span> createCompany(<span class="string">'F2E'</span>,&#123;</span><br><span class="line">    name: <span class="string">'licao'</span>,</span><br><span class="line">    age: <span class="number">20</span>,</span><br><span class="line">    sex: <span class="string">'male'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> staff02 = <span class="keyword">new</span> createCompany(<span class="string">'UI'</span>,&#123;</span><br><span class="line">    name: <span class="string">'lucy'</span>,</span><br><span class="line">    age: <span class="number">22</span>,</span><br><span class="line">    sex: <span class="string">'female'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">staff01.saySkills();</span><br><span class="line">staff02.saySkills();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(staff01);</span><br><span class="line"><span class="built_in">console</span>.log(staff02);</span><br></pre></td></tr></table></figure>
+<h3 id="构造函数模式"><a href="#构造函数模式" class="headerlink" title="构造函数模式"></a>构造函数模式</h3><p>构造函数也是函数，只是相比较普通函数，函数名一般习惯以大写字母开头，他可以创建对象实例，因为 <code>JavaScript</code> 中函数说到底也是对象。按照《JavaScript高级程序设计》的说法，通过操作符 <code>new</code> 创建对象实例实际上经过四个步骤：</p>
+<ol>
+<li>创建一个新对象；</li>
+<li>将构造函数的作用域赋给新创建的对象（this指向这个新的对象）；</li>
+<li>执行构造函数中的代码（即为这个新的对象添加属性，当然也包括方法，然而我们一般不建议这么干，因为每每去创建一个新的实例，都要重新创建构造函数中的方法，所以构造函数并不单独使用，一般是和原型模式混合使用）；</li>
+<li>返回新对象；</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">CreateCoder</span>(<span class="params">name,age,sex,position</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">    <span class="keyword">this</span>.sex = sex;</span><br><span class="line">    <span class="keyword">this</span>.position = position;</span><br><span class="line">    <span class="keyword">this</span>.sayPosition = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">         <span class="built_in">console</span>.log(<span class="keyword">this</span>.position);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> FE = <span class="keyword">new</span> CreateCoder(<span class="string">"licao"</span>,<span class="number">20</span>,<span class="string">"male"</span>,<span class="string">"font-end engineer"</span>);</span><br><span class="line"><span class="keyword">var</span> UX = <span class="keyword">new</span> CreateCoder(<span class="string">"xiaomin"</span>,<span class="number">22</span>,<span class="string">"female"</span>,<span class="string">"UX"</span>);</span><br></pre></td></tr></table></figure>
+<p>上面的代码中我将公共方法 <code>sayPosition</code> 写在构造函数中，导致每 <code>new</code> 一个实例都会创建一次函数，注意每个函数都不是同一个内建对象 <code>Function</code> 的实例,本质上每个 <code>CreateCoder</code> 的实例都包含一个不同的 <code>Function</code> 的实例:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(FE.sayPosition == UX.sayPosition);<span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+<p>下面我们将公用方法写在构造函数的原型对象上:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">CreateCoder</span>(<span class="params">name,age,sex,position</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">    <span class="keyword">this</span>.sex = sex;</span><br><span class="line">    <span class="keyword">this</span>.position = position;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CreateCoder.prototype.sayPosition = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.position);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> FE = <span class="keyword">new</span> CreateCoder(<span class="string">"licao"</span>,<span class="number">20</span>,<span class="string">"male"</span>,<span class="string">"font-end engineer"</span>);</span><br><span class="line"><span class="keyword">var</span> UX = <span class="keyword">new</span> CreateCoder(<span class="string">"xiaomin"</span>,<span class="number">22</span>,<span class="string">"female"</span>,<span class="string">"UX"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(FE.sayPosition == UX.sayPosition);<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<h3 id="混合模式"><a href="#混合模式" class="headerlink" title="混合模式"></a>混合模式</h3><p>混合模式所要解决的问题主要是对象（构造函数）的继承。如何在原有对象的基础上，拓展出一个新对象，新对象继承需要原有对象的属性和方法。而前面的构造函数模式与原型模式结合的模式又表明，我们需要分别继承原有对象的自有属性及其原型对象上的方法，这样就出现了 <code>JavaScript</code> 所谓的混合模式,下面代码的每一步都对应这样的思想：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//混合模式 前提是理解：构造函数模式与原型模式结合、原型链、原型式继承、以及 call 函数、ES5中Object.create()函数的概念</span></span><br><span class="line"><span class="keyword">var</span> Person = <span class="function"><span class="keyword">function</span>(<span class="params">name,age,sex</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">    <span class="keyword">this</span>.sex = sex;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Coder = <span class="function"><span class="keyword">function</span>(<span class="params">name,age,sex,position</span>)</span>&#123;</span><br><span class="line">    Person.call(<span class="keyword">this</span>,name,age,sex,position);</span><br><span class="line">    <span class="keyword">this</span>.position = position;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//-------可用ES5的 Object.create() 替代下面的写法----------</span></span><br><span class="line"><span class="comment">// 兼容性：IE9+、Firefix4+、Safari5+、Opera12+ 和 Chrome</span></span><br><span class="line"><span class="comment">// Coder.prototype = Object.create(Person.prototype);</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params">o</span>)</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    F.prototype = o;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> F();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Coder.prototype = create(Person.prototype);</span><br><span class="line"><span class="comment">//-------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//重写从原对象继承过来方法，（根据实际需求）</span></span><br><span class="line">Coder.prototype.sayName = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="built_in">console</span>.log(<span class="keyword">this</span>.age);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在继承了原有对象的基础上 拓展方法，（根据实际需求）</span></span><br><span class="line">Coder.prototype.sayPosition = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="built_in">console</span>.log(<span class="keyword">this</span>.position);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> FE = <span class="keyword">new</span> Coder(<span class="string">"licao"</span>,<span class="number">20</span>,<span class="string">"male"</span>,<span class="string">"font-end engineer"</span>);</span><br><span class="line"><span class="comment">//result</span></span><br><span class="line"><span class="built_in">console</span>.log(FE);</span><br><span class="line">FE.sayPosition();<span class="comment">//font-end engineer</span></span><br><span class="line">FE.sayName();<span class="comment">//licao</span></span><br></pre></td></tr></table></figure>
+<p>深入理解混合模式的前提是理解：构造函数模式与原型模式结合、原型链、原型式继承、以及 <code>call/apply</code> 函数、<code>ES5</code> 中 <code>Object.create()</code> 函数的概念，这些前面的文章已有了初步介绍，目前够用了。</p>
+<h3 id="模块模式"><a href="#模块模式" class="headerlink" title="模块模式"></a>模块模式</h3><p>封装模块的方式，JavaScript中没有私有变量的概念，很难有封装的概念，所以如果想封装一段代码，必须用到模块模式（匿名闭包）写代码，貌似似曾相识，对哦，在前面几篇写前端模块化之旅的文章写过这个概念;</p>
+<p>关于闭包，我们不建议使用，而这种模块化的写法是我们进行代码封装的惯用写法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Person = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> _name,</span><br><span class="line">        _age,</span><br><span class="line">        _sex,</span><br><span class="line">        _position;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        init: <span class="function"><span class="keyword">function</span> (<span class="params">obj</span>) </span>&#123;</span><br><span class="line">             _name = obj.name;</span><br><span class="line">             _age = obj.age;</span><br><span class="line">             _sex = obj.sex;</span><br><span class="line">             _position = obj.position;</span><br><span class="line">        &#125;,</span><br><span class="line">        changePosition: <span class="function"><span class="keyword">function</span> (<span class="params">newPosition</span>) </span>&#123;</span><br><span class="line">             _position = newPosition;</span><br><span class="line">        &#125;,</span><br><span class="line">        sayPosition: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">             <span class="built_in">console</span>.log(_position);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line">Person.sayPosition();<span class="comment">//undefined</span></span><br><span class="line">Person.init(&#123;name:<span class="string">"licao"</span>,age:<span class="number">20</span>,sex:<span class="string">"male"</span>,position:<span class="string">"PM"</span>&#125;);</span><br><span class="line">Person.sayPosition();<span class="comment">//PM</span></span><br><span class="line">Person.changePosition(<span class="string">"font-end engineer"</span>);</span><br><span class="line">Person.sayPosition();<span class="comment">//font-end engineer</span></span><br></pre></td></tr></table></figure>
+<h3 id="发布订阅模式"><a href="#发布订阅模式" class="headerlink" title="发布订阅模式"></a>发布订阅模式</h3><p>定义了对象之间一种一对多的依赖关系，当一个对象的状态改变时，所有依赖于它的对象都将得到通知。可以用于异步编程，用于对象间的通知机制：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建事件中心</span></span><br><span class="line"><span class="keyword">var</span> EventManager = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">var</span> events = &#123;&#125;;</span><br><span class="line">     <span class="comment">//监听事件</span></span><br><span class="line">     <span class="function"><span class="keyword">function</span> <span class="title">on</span>(<span class="params">evt,handler</span>) </span>&#123;</span><br><span class="line">         events[evt] = events[evt] || [];</span><br><span class="line">         events[evt].push(&#123;</span><br><span class="line">            handler: handler</span><br><span class="line">         &#125;)</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="comment">//绑定事件</span></span><br><span class="line">     <span class="function"><span class="keyword">function</span> <span class="title">fire</span>(<span class="params">evt,args</span>) </span>&#123;</span><br><span class="line">        <span class="comment">//查询事件列表</span></span><br><span class="line">         <span class="keyword">if</span> (!events[evt]) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; events[evt].length; i++)&#123;</span><br><span class="line">            events[evt][i].handler(args);</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">//解绑事件（如果该事件存在）</span></span><br><span class="line">     <span class="function"><span class="keyword">function</span> <span class="title">off</span>(<span class="params">evt</span>)</span>&#123;</span><br><span class="line">         <span class="keyword">if</span> (!events[evt]) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">         &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">delete</span> events[evt];</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;		</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> &#123;</span><br><span class="line">        on: on,</span><br><span class="line">        off: off,</span><br><span class="line">        fire: fire</span><br><span class="line">     &#125;</span><br><span class="line">&#125;)()</span><br><span class="line"><span class="comment">//监听事件</span></span><br><span class="line">EventManager.on(<span class="string">'text:change'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">val</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'text:change...  now val is '</span> + val);  </span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 绑定事件</span></span><br><span class="line">EventManager.fire(<span class="string">'text:change'</span>, <span class="string">'FE'</span>);</span><br><span class="line"><span class="comment">//解绑事件</span></span><br><span class="line">EventManager.off(<span class="string">'text:changer'</span>);</span><br></pre></td></tr></table></figure>
+<hr>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E5%8D%9A%E5%AE%A2%E5%BE%AE%E4%BF%A1%E8%AE%A2%E9%98%85%E5%8F%B7.jpg" alt="蓝岚 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果您喜欢，请随意打赏。您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E5%BE%AE%E4%BF%A1%E6%89%93%E8%B5%8F%E9%9A%8F%E6%84%8F.png" alt="蓝岚 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%89%93%E8%B5%8F%E9%9A%8F%E6%84%8F.jpg" alt="蓝岚 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/28/JavaScript的几个选择题/" rel="next" title="JavaScript的几个选择题">
+                <i class="fa fa-chevron-left"></i> JavaScript的几个选择题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/17/能做喜欢做的-就很好/" rel="prev" title="能做喜欢做的-就很好">
+                能做喜欢做的-就很好 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ffc85abe3ee8ee" async = "async" ></script>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/24/浅析几种设计模式/"
+           data-title="浅析几种设计模式" data-url="http://licao404.com/2016/06/24/浅析几种设计模式/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xr868.com1.z0.glb.clouddn.com/me.jpg"
+               alt="蓝岚" />
+          <p class="site-author-name" itemprop="name">蓝岚</p>
+          <p class="site-description motion-element" itemprop="description">一生想做浪漫极客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="Mailto:15720600373@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope-o"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2806327437/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://coolshell.cn/" title="酷壳" target="_blank">酷壳</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#单例模式"><span class="nav-number">1.</span> <span class="nav-text">单例模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂（方法）模式"><span class="nav-number">2.</span> <span class="nav-text">工厂（方法）模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数模式"><span class="nav-number">3.</span> <span class="nav-text">构造函数模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#混合模式"><span class="nav-number">4.</span> <span class="nav-text">混合模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块模式"><span class="nav-number">5.</span> <span class="nav-text">模块模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布订阅模式"><span class="nav-number">6.</span> <span class="nav-text">发布订阅模式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script> -->
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-cogs"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">蓝岚</span>
+  <!-- <span id="busuanzi_container_site_pv" style='display: none'>
+    &nbsp; | &nbsp;您是本站第<span id="busuanzi_value_site_pv"></span>位小伙伴
+</span> -->
+</div>
+
+<div class="powered-by">
+  Power by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+  &nbsp;&nbsp; | &nbsp;&nbsp;<a id="translateLink" href="javascript:translatePage();">繁體</a>
+</div>
+
+<script type="text/javascript" src="http://7xrvo9.com1.z0.glb.clouddn.com/tw_cn.js"></script>
+<script type="text/javascript">
+  var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+  var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+  var cookieDomain = "http://www.licao404.com/"; //Cookie地址, 一定要设定, 通常为你的网址
+  var msgToTraditionalChinese = "繁體"; //此处可以更改为你想要显示的文字
+  var msgToSimplifiedChinese = "简体"; //同上，但两处均不建议更改
+  var translateButtonId = "translateLink"; //默认互换id
+  translateInitilization();
+</script>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"> 本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"licao404"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("eU0wbE0RUcORq7vQxOaLmU26-gzGzoHsz", "Gtpg553mTGDAVFS7WKsPbSA3");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  
+
+
+</body>
+</html>

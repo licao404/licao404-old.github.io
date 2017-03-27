@@ -1,0 +1,1236 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="XbkMTn0NEANG-vDVITHx2Gnz8X7Yj0lvkXmj6291KDY" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Angular,React,框架,杂谈," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="蓝岚爱肉肉" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="A few years ago, when my code started to get cluttered with jQuery selectors and callbacks, AngularJS came to my rescue.Angular helped me with the maintainability of my dev projects. It came with a l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why I Ditched Angular for React">
+<meta property="og:url" content="http://licao404.com/2016/05/27/Why-I-Ditched-Angular-for-React/index.html">
+<meta property="og:site_name" content="蓝岚爱肉肉">
+<meta property="og:description" content="A few years ago, when my code started to get cluttered with jQuery selectors and callbacks, AngularJS came to my rescue.Angular helped me with the maintainability of my dev projects. It came with a l">
+<meta property="og:image" content="http://7xrvo9.com1.z0.glb.clouddn.com/20160527/post-bg-re-vs-ng2.jpg">
+<meta property="og:image" content="http://7xrvo9.com1.z0.glb.clouddn.com/20160527/0485-01-react-virtual-dom.png">
+<meta property="og:updated_time" content="2016-05-27T11:37:23.080Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Why I Ditched Angular for React">
+<meta name="twitter:description" content="A few years ago, when my code started to get cluttered with jQuery selectors and callbacks, AngularJS came to my rescue.Angular helped me with the maintainability of my dev projects. It came with a l">
+<meta name="twitter:image" content="http://7xrvo9.com1.z0.glb.clouddn.com/20160527/post-bg-re-vs-ng2.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6261706695056033000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://licao404.com/2016/05/27/Why-I-Ditched-Angular-for-React/"/>
+
+  <title> Why I Ditched Angular for React | 蓝岚爱肉肉 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?50dccebe8271dcccd782178e2cdbbc52";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s95.cnzz.com/z_stat.php?id=1258087445&web_id=1258087445" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">蓝岚爱肉肉</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Gardon Lee's Blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-file-text"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+        <li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()    '>[High起来]</a> </li>
+
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '7PcwcK-5yqhMrUDyc-y-','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Why I Ditched Angular for React
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-27T18:50:59+08:00" content="2016-05-27">
+              2016-05-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端进阶/" itemprop="url" rel="index">
+                    <span itemprop="name">前端进阶</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端进阶/外文阅读/" itemprop="url" rel="index">
+                    <span itemprop="name">外文阅读</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/27/Why-I-Ditched-Angular-for-React/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/27/Why-I-Ditched-Angular-for-React/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/05/27/Why-I-Ditched-Angular-for-React/" class="leancloud_visitors" data-flag-title="Why I Ditched Angular for React">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <img src="http://7xrvo9.com1.z0.glb.clouddn.com/20160527/post-bg-re-vs-ng2.jpg" class="full-image">
+<blockquote class="blockquote-center">A few years ago, when my code started to get cluttered with jQuery selectors and callbacks, AngularJS came to my rescue.<br><br>Angular helped me with the maintainability of my dev projects. It came with a lot of functionality out-of-the-box. It was tooled for building large-scale web apps, greatly facilitating rapid development in this genre of applications.</blockquote>
+
+<a id="more"></a>
+<p>I remember how its two-way binding and the philosophy of Model as the single source of truth blew me away. And, in practice, they reduced data-redundancy throughout my applications.</p>
+<p>Over time though, I discovered some pain points in Angular. Eventually they caused me enough frustration that I began looking around for alternatives.</p>
+<p>Here are the concerns I have with Angular.</p>
+<p><strong>DOM for execution.</strong> Angular heavily relies on the DOM for its execution flow. In the default bootstrapping of Angular apps, it scans the DOM and compiles it with priorities of directives, which makes it difficult to debug and test the execution order.</p>
+<p><strong>Two-way binding is a double-edged sword.</strong> As the complexity of your components grows, this approach can lead to performance issues.</p>
+<p>How does two-way binding affect performance? JavaScript (ES5) doesn’t have any implementation to notify for any change to its variables or objects, so Angular uses something called “dirty checking” to track data changes and sync them with the user interface (UI).</p>
+<p>Dirty-checking is carried out after any operation is performed within Angular’s scope ($digest cycle) which leads to slower performance as the amount of bindings increases.</p>
+<p>Another problem with two-way binding is that many components on the page are capable of changing data, which means there are multiple sources of data inputs. If not managed well, this can lead to a confusing and overwhelming situation. To be fair, this is an implementation issue, not an Angular issue in and of itself.</p>
+<p><strong>Angular has its own world.</strong> Every operation in Angular must go through its digest cycle, or else your components won’t sync with your data models. This leads to compatibility issues with other dependencies.</p>
+<p>If you use any third-party JavaScript library that involves data changes, you need to wrap it with Angular’s $apply function. Or you will need to convert it to a service, if it’s a utility library. This is like having to reinvent every JavaScript library you use in order for it to interoperate with Angular.</p>
+<p><strong>Dependency injection.</strong> JavaScript currently doesn’t have a package manager and dependency resolver of its own. AMD, UMD and CommonJS have been solving this gap well. But, <a href="https://github.com/angular/angular.js/issues/4919" target="_blank" rel="external">until recently</a>, Angular did not play well with any of these. Rather, it introduces a dependency injection (DI) of its own. Though, to be fair, there are unofficial Angular dependency-injection implementations using RequireJS.</p>
+<p><strong>Steep learning curve.</strong> Using Angular requires learning a ton of concepts including, but not limited to:</p>
+<ul>
+<li>modules</li>
+<li>controllers</li>
+<li>directives</li>
+<li>scopes</li>
+<li>templating</li>
+<li>linking functions</li>
+<li>filters</li>
+<li>dependency injection</li>
+</ul>
+<p>It can be very difficult to get started with Angular. It’s not for the faint of heart.</p>
+<p>All of this led me to React.</p>
+<p><strong>What’s So Great About React?</strong></p>
+<p><a href="http://facebook.github.io/react/" target="_blank" rel="external">React</a>, the new open source framework for building user interfaces, is a different way of developing JavaScript apps. React is led by Facebook and Instagram.</p>
+<p>To be clear: React <strong>isn’t</strong> an application development framework like AngularJS. It’s not fair to compare the two in an apples-to-apples manner.</p>
+<p>When React was <a href="http://2013.jsconf.eu/speakers/pete-hunt-react-rethinking-best-practices.html" target="_blank" rel="external">introduced</a> at JSConf EU in May 2013, the audience was shocked by some of its concepts, like “one-way data flow” and “Virtual DOM”.</p>
+<p>React is for building user interfaces. In other words, straight from the official landing page of the project: “people use React as the <strong>V in MVC.</strong>“ However, you can write self-contained components with it, which more or less compares to Angular directives.</p>
+<p>React rethinks our current web development concepts and best practices.</p>
+<p>For instance, it encourages <strong>one-way data flow</strong> and believes in a philosophy that components are state machines driven by data.</p>
+<p>Whereas most of the other similar frameworks love working with the DOM and directly manipulating it, React hates the DOM and works to shield the developer from it.</p>
+<p>React provides the bare-minimum API needed to define a UI component. Nothing more, nothing less. It follows UNIX philosophy: Small is beautiful. Do one thing, and do it best.</p>
+<p>You can find a more detailed <a href="http://www.quora.com/Pete-Hunt/Posts/Facebooks-React-vs-AngularJS-A-Closer-Look" target="_blank" rel="external">comparison of Angular vs. React</a> by Pete Hunt (who works at Facebook/Instagram).</p>
+<p><strong>Why Did I Switch to React?</strong></p>
+<p>Here are some of the things I like about React.</p>
+<p><strong>React is Fast</strong></p>
+<p>React takes a different approach to the DOM compared to other frameworks.</p>
+<p>It does not let you work with the DOM directly.</p>
+<p>It introduces a layer, called <strong>Virtual DOM</strong>, between your JavaScript logic and the actual DOM.</p>
+<p><img src="http://7xrvo9.com1.z0.glb.clouddn.com/20160527/0485-01-react-virtual-dom.png" alt=""></p>
+<p>This concept improves web performance. On successive renders, React performs a differential (diff) on the Virtual DOM, and then updates only parts of the actual DOM that need to be updated.</p>
+<p><strong>Cross-Browser Compatibility</strong></p>
+<p>Virtual DOM also helps solve cross-browser issues because it provides us with a standardized API that even works as far back as IE 8.</p>
+<p><strong>Modularity</strong></p>
+<p>Writing self-contained UI components modularizes your app, which in turn isolates issues only to the problematic component/s.</p>
+<p>Every component can be developed and tested in isolation, and they can use other components. This equates to maintainability improvements.</p>
+<p><strong>One-way Data Flow Makes Things Saner</strong></p>
+<p><a href="http://facebook.github.io/flux/docs/overview.html" target="_blank" rel="external">Flux</a> is an architecture for creating one-way data layers in JavaScript applications. It was conceptualized by Facebook along with the React view library. The Flux concept makes large-scale app development simpler.</p>
+<p>Flux is a concept rather than a tool-specific implementation. It can be incorporated into other frameworks. For instance, Alex Rattray has a nice <a href="http://www.toptal.com/front-end/simple-data-flow-in-react-applications-using-flux-and-backbone" target="_blank" rel="external">implementation of Flux</a> using Backbone Collection and Model in React.</p>
+<p><strong>Just JavaScript</strong></p>
+<p>Modern web apps work in a different way compared to the traditional Web.</p>
+<p>For example, the View layer needs to be updated with user interactions without hitting the server. And hence View and Controller need to rely on each other heavily.</p>
+<p>Many other frameworks use templating engines like Handlebars or Mustache to deal with the View layer. But React believes that View and Controller are so interdependent that they must reside at a single place without the use of any third-party templating engine, and, on top of that, without leaving the scope of JavaScript.</p>
+<p><strong>Isomorphic JavaScript</strong></p>
+<p>The biggest drawback of single-page JS web apps is that it has limitations when crawled by search engines. React has a solution for this.</p>
+<p>React can pre-render apps on the server before sending it to the user agent. It can restore the same state into the live application from the pre-rendered static content on the server.</p>
+<p>Because search engine crawlers rely on the server response rather than JavaScript execution, pre-rendering your apps helps with SEO.</p>
+<p><strong>It Plays Well with Others</strong></p>
+<p>Loaders and bundlers like RequireJS, Browserify and Webpack are much needed when you’re building large applications. They make the arduous task surmountable.</p>
+<p>Unfortunately, the current version of JavaScript doesn’t provide a module bundler or loader. (Though there’s a proposal to address this in the upcoming version, ES6, with System.import).</p>
+<p>Fortunately we have some alternatives like RequireJS and Webpack, which are pretty neat. React is built with Browserify, but if you’re looking to inject image assets and compile <a href="http://sixrevisions.com/tutorials/set-up-less-js/" target="_blank" rel="external">Less</a> or <a href="http://sixrevisions.com/javascript/coffeescript-basics/" target="_blank" rel="external">CoffeeScript</a>, then probably Webpack stands as a better option. The point is: You are afforded that choice.</p>
+<p><strong>Do I Need Another Development Framework with React?</strong></p>
+<p>Using React, you can build user interfaces, but you still need to make AJAX calls, apply data filters, and other things that Angular already does.</p>
+<p>So if we need an additional JavaScript app development framework, why ditch Angular?</p>
+<p>Frameworks are a set of modules and rules. If I don’t need some of its modules, or want to swap out a module for another one that does the job better, how do I do it?</p>
+<p>One of the ways to achieve modularity and better dependency-management is through package managers.</p>
+<p>But then, how do we manage packages in Angular? That’s up to you, but know that Angular has its own world. You will most likely need to adapt third-party packages into Angular’s world.</p>
+<p>React, on the other hand, is just JavaScript. Any package written in JavaScript won’t need any wrapping in React.</p>
+<p>For me, using package managers like npm and Bower is better. We can pick and choose our components and craft custom toolsets. To be clear: This is more complicated compared to just using a comprehensive app development framework like Angular.</p>
+<p>On this front, the saving grace is that React encourages the use of npm, which has a lot of ready-to-use packages. To get started building apps with React, you can, for example, use one of these <a href="https://github.com/facebook/react/wiki/Complementary-Tools#full-stack-starter-kits" target="_blank" rel="external">full-stack starter kits</a>.</p>
+<p><strong>Switching to React is Not Painless!</strong></p>
+<p>Since Angular is an app development framework, it comes with a lot of goodies. I’m giving up great features like an AJAX wrapper in the $http service, $q as a promise service, ng-show, ng-hide, ng-class, and ng-if as controlling statements for template — all that amazing stuff.</p>
+<p>React isn’t an app development framework, so you need to think about how to deal with the other aspects of building applications. For example, I’m working on an open source project called <a href="https://github.com/sahusoftcom/react-utils" target="_blank" rel="external">react-utils</a> which can be used with React to ease development.</p>
+<p>The community is also actively contributing similar reusable components to fill in the blanks, so to speak. <a href="http://react-components.com/" target="_blank" rel="external">React Components</a> is an unofficial directory website where you can find such open source components.</p>
+<p>React’s philosophy does not encourage you to use two-way binding, which brings a lot of pain when you’re dealing with form elements and editable data grids.</p>
+<p>However, as you start understanding the Flux data flow and Stores, things become clearer, simpler and easier.</p>
+<p>React is new. It will take some time for the community around it to grow. Angular, on the other hand, has already gained huge popularity, and has a relatively large number of extensions available (e.g. AngularUI and Restangular).</p>
+<p>However, although React’s community is new, <strong>it is growing fast</strong>. Extensions like React Bootstrap are a testament to this. It’s just a matter of time before we have more components available.</p>
+<p><strong>Conclusion</strong></p>
+<p>If you love the Angular approach, then you may hate React at first. Mainly because of it’s one-way data flow and lack of app development features. You end up needing to take care of many things by yourself.</p>
+<p>But as soon as you get comfortable with the Flux design pattern and React’s philosophy, I guarantee that you will begin to see its beauty.</p>
+<p>Facebook and Instagram both use React (because they are leading the project).</p>
+<p>GitHub’s new source code editor, Atom, is built using React.</p>
+<p>The upcoming Yahoo! Mail is being rebuilt in React.</p>
+<p>React already has large-scale apps and big tech companies betting on it.</p>
+<blockquote>
+<p>Author: Kumar Sanket<br>From: <a href="http://sixrevisions.com/javascript/why-i-ditched-angular-for-react/" target="_blank" rel="external">sixrevisions.com</a></p>
+</blockquote>
+<hr>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E5%8D%9A%E5%AE%A2%E5%BE%AE%E4%BF%A1%E8%AE%A2%E9%98%85%E5%8F%B7.jpg" alt="蓝岚 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果您喜欢，请随意打赏。您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E5%BE%AE%E4%BF%A1%E6%89%93%E8%B5%8F%E9%9A%8F%E6%84%8F.png" alt="蓝岚 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%89%93%E8%B5%8F%E9%9A%8F%E6%84%8F.jpg" alt="蓝岚 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Angular/" rel="tag"># Angular</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+            <a href="/tags/框架/" rel="tag"># 框架</a>
+          
+            <a href="/tags/杂谈/" rel="tag"># 杂谈</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/19/前端模块化之旅（三）：RequireJS模块化及r-js指南/" rel="next" title="前端模块化之旅（三）：RequireJS模块化及r.js指南">
+                <i class="fa fa-chevron-left"></i> 前端模块化之旅（三）：RequireJS模块化及r.js指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/28/JavaScript的几个选择题/" rel="prev" title="JavaScript的几个选择题">
+                JavaScript的几个选择题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ffc85abe3ee8ee" async = "async" ></script>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/27/Why-I-Ditched-Angular-for-React/"
+           data-title="Why I Ditched Angular for React" data-url="http://licao404.com/2016/05/27/Why-I-Ditched-Angular-for-React/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xr868.com1.z0.glb.clouddn.com/me.jpg"
+               alt="蓝岚" />
+          <p class="site-author-name" itemprop="name">蓝岚</p>
+          <p class="site-description motion-element" itemprop="description">一生想做浪漫极客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="Mailto:15720600373@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope-o"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2806327437/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://coolshell.cn/" title="酷壳" target="_blank">酷壳</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script> -->
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-cogs"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">蓝岚</span>
+  <!-- <span id="busuanzi_container_site_pv" style='display: none'>
+    &nbsp; | &nbsp;您是本站第<span id="busuanzi_value_site_pv"></span>位小伙伴
+</span> -->
+</div>
+
+<div class="powered-by">
+  Power by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+  &nbsp;&nbsp; | &nbsp;&nbsp;<a id="translateLink" href="javascript:translatePage();">繁體</a>
+</div>
+
+<script type="text/javascript" src="http://7xrvo9.com1.z0.glb.clouddn.com/tw_cn.js"></script>
+<script type="text/javascript">
+  var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+  var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+  var cookieDomain = "http://www.licao404.com/"; //Cookie地址, 一定要设定, 通常为你的网址
+  var msgToTraditionalChinese = "繁體"; //此处可以更改为你想要显示的文字
+  var msgToSimplifiedChinese = "简体"; //同上，但两处均不建议更改
+  var translateButtonId = "translateLink"; //默认互换id
+  translateInitilization();
+</script>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"> 本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"licao404"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("eU0wbE0RUcORq7vQxOaLmU26-gzGzoHsz", "Gtpg553mTGDAVFS7WKsPbSA3");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  
+
+
+</body>
+</html>

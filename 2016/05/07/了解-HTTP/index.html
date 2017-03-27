@@ -1,0 +1,1358 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="XbkMTn0NEANG-vDVITHx2Gnz8X7Yj0lvkXmj6291KDY" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Web服务器,前后端,HTTP,TCP/IP," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="蓝岚爱肉肉" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="OSI 七层模型指什么？
+OSI（Open System Interconnection）七层模型是国际标准化组织（ISO）制定的一个用于计算机或通信系统间互联的标准体系，它是一个七层的、抽象的模型，不仅包括一系列抽象的术语或概念，也包括具体的协议。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="了解 HTTP">
+<meta property="og:url" content="http://licao404.com/2016/05/07/了解-HTTP/index.html">
+<meta property="og:site_name" content="蓝岚爱肉肉">
+<meta property="og:description" content="OSI 七层模型指什么？
+OSI（Open System Interconnection）七层模型是国际标准化组织（ISO）制定的一个用于计算机或通信系统间互联的标准体系，它是一个七层的、抽象的模型，不仅包括一系列抽象的术语或概念，也包括具体的协议。">
+<meta property="og:image" content="http://7xrvo9.com1.z0.glb.clouddn.com/2016.0507/macbook-926558.jpg">
+<meta property="og:image" content="http://7xr868.com1.z0.glb.clouddn.com/task34/RequestHeaders.png">
+<meta property="og:image" content="http://7xr868.com1.z0.glb.clouddn.com/task34/ResponseHeaders.png">
+<meta property="og:image" content="http://7xr868.com1.z0.glb.clouddn.com/task34/%E8%AF%B7%E6%B1%82%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5.png">
+<meta property="og:image" content="http://7xr868.com1.z0.glb.clouddn.com/task34/%E5%93%8D%E5%BA%94%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5.png">
+<meta property="og:image" content="http://7xr868.com1.z0.glb.clouddn.com/task34/%E4%B8%BB%E4%BD%93.png">
+<meta property="og:image" content="http://7xpvnv.com2.z0.glb.qiniucdn.com/257149f7-1e11-4262-9b15-159389db83c6">
+<meta property="og:updated_time" content="2016-05-14T03:25:06.988Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="了解 HTTP">
+<meta name="twitter:description" content="OSI 七层模型指什么？
+OSI（Open System Interconnection）七层模型是国际标准化组织（ISO）制定的一个用于计算机或通信系统间互联的标准体系，它是一个七层的、抽象的模型，不仅包括一系列抽象的术语或概念，也包括具体的协议。">
+<meta name="twitter:image" content="http://7xrvo9.com1.z0.glb.clouddn.com/2016.0507/macbook-926558.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6261706695056033000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://licao404.com/2016/05/07/了解-HTTP/"/>
+
+  <title> 了解 HTTP | 蓝岚爱肉肉 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?50dccebe8271dcccd782178e2cdbbc52";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s95.cnzz.com/z_stat.php?id=1258087445&web_id=1258087445" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">蓝岚爱肉肉</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Gardon Lee's Blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-file-text"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+        <li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()    '>[High起来]</a> </li>
+
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '7PcwcK-5yqhMrUDyc-y-','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                了解 HTTP
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-07T15:03:37+08:00" content="2016-05-07">
+              2016-05-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/计算机基础/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机基础</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/计算机基础/计算机网络/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机网络</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/07/了解-HTTP/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/07/了解-HTTP/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/05/07/了解-HTTP/" class="leancloud_visitors" data-flag-title="了解 HTTP">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://7xrvo9.com1.z0.glb.clouddn.com/2016.0507/macbook-926558.jpg" alt=""></p>
+<blockquote>
+<h4 id="OSI-七层模型指什么？"><a href="#OSI-七层模型指什么？" class="headerlink" title="OSI 七层模型指什么？"></a><strong>OSI 七层模型指什么？</strong></h4></blockquote>
+<p>OSI（Open System Interconnection）七层模型是国际标准化组织（ISO）制定的一个用于计算机或通信系统间互联的标准体系，它是一个七层的、抽象的模型，不仅包括一系列抽象的术语或概念，也包括具体的协议。</p>
+<a id="more"></a>
+<ul>
+<li><p><strong>应用层</strong> (Application)：，OSI 参考模型中的最高层；网络服务与最终用户的一个接口。各种应用程序协议，HTTP,FTP,TFTP,SMTP,SNMP,DNS,POP3;</p>
+</li>
+<li><p><strong>表示层</strong>（Presentation Layer）：OSI 参考模型中的第六层；数据的表示、安全、压缩。在表示层，数据将按照网络能理解的方案进行格式化，这种格式化也因所使用网络的类型不同而不同；表示层管理数据的解密与加密，如系统口令的处理；除此之外，表示层协议还对图片和文件格式信息进行解码和编码。</p>
+</li>
+<li><p><strong>会话层</strong>（Session Layer）：OSI 参考模型中的第五层；负责在网络中的两节点之间建立、维持和终止通信。 会话层的功能包括：建立通信链接，保持会话过程通信链接的畅通，同步两个节点之间的对话，决定通信是否被中断以及通信中断时决定从何处重新发送。</p>
+</li>
+<li><p><strong>传输层</strong>（Transport）：OSI 参考模型的第四层；定义传输数据的协议端口号，以及流控和差错效验。协议有：<code>TCP</code> 、<code>UDP</code>，数据包一旦离开网卡即进入网络传输层；</p>
+</li>
+<li><p><strong>网络层</strong>（Network）：OSI 参考模型的第三层；进行逻辑地址寻址，实现不同网络之间的路径选择。协议有：<code>ICMP</code> 、<code>IGMP</code> 、<code>IP（IPV4 IPV6）</code> 、 <code>ARP</code> 、<code>RARP</code>；</p>
+</li>
+<li><p><strong>数据链路层</strong> (Link) ：OSI 参考模型的第二层；建立逻辑连接、进行硬件地址寻址、差错校验等功能。（由底层网络定义协议）<br>将比特组合成字节进而组合成帧，用MAC地址访问介质，错误发现但不能纠正；</p>
+</li>
+<li><p><strong>物理层</strong>（Physical Layer）：OSI 参考模型的最低层；该层包括物理连网媒介，如电缆连线连接器。物理层的协议产生并检测电压以便发送和接收携带数据的信号。用户要传递信息就要利用一些物理媒体，如双绞线、同轴电缆等，但具体的物理媒体并不在OSI的7层之内，有人把物理媒体当做第0层，物理层的任务就是为它的上一层提供一个物理连接，以及它们的机械、电气、功能和规程特性。</p>
+</li>
+</ul>
+<blockquote>
+<h4 id="HTTP-的工作原理是什么？"><a href="#HTTP-的工作原理是什么？" class="headerlink" title="HTTP 的工作原理是什么？"></a><strong>HTTP 的工作原理是什么？</strong></h4></blockquote>
+<p>HTTP协议（超文本传输协议）定义了Web客户端如何从Web服务器请求Web页面，以及服务器如何将Web页面传送给客户端。HTTP协议采用了请求/响应模型。客户端向服务器端发送一个请求报文（包含请求方法、URL、协议版本、请求头部和请求数据）。服务器端以一个状态作为响应（包括协议的版本、成功或错误代码、服务器信息、响应头和响应数据）。断开连接。HTTP是一种无状态协议。</p>
+<blockquote>
+<h4 id="URI-的格式是什么？常见的协议有哪些？"><a href="#URI-的格式是什么？常见的协议有哪些？" class="headerlink" title="URI 的格式是什么？常见的协议有哪些？"></a><strong>URI 的格式是什么？常见的协议有哪些？</strong></h4></blockquote>
+<p>URI（统一资源标识符）格式：<strong><code>&lt;scheme&gt;://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;path&gt;;&lt;params&gt;?&lt;query&gt;#&lt;hash&gt;</code></strong></p>
+<ul>
+<li><p><strong><code>&lt;scheme&gt;</code></strong> : 协议名，可能为 <code>HTTP</code>(默认端口80)、<code>HTTPS</code>(默认端口443)、<code>FTP</code>(默认端口21)、<code>SSH</code>(默认端口22)、<code>SMTP</code>(默认端口25)、<code>IMAP</code>(默认端口143)等；</p>
+</li>
+<li><p><strong><code>&lt;user&gt;</code></strong> : 用户名，HTTP 协议中不常见，SSH 协议一般是必须的；</p>
+</li>
+<li><p><strong><code>&lt;password&gt;</code></strong> : 密码，现在一般不会用明文的方式将密码写在 URI 上；</p>
+</li>
+<li><p><strong><code>&lt;host&gt;</code></strong> : 主机地址，域名或者 IP ，用于确定要连接的对象的地址；</p>
+</li>
+<li><p><strong><code>&lt;port&gt;</code></strong> : 端口号，用来区分主机上的进程，以便精确定位要连接的服务；</p>
+</li>
+<li><p><strong><code>&lt;path&gt;</code></strong> : 资源路径，用来确认资源存放的位置；</p>
+</li>
+<li><p><strong><code>&lt;params&gt;</code></strong> : 参数，以键值对的形式提供，以 <code>;</code> 分隔开。在例如 ftp 协议中可用于规定文件是以二进制形式还是文本形式传输。</p>
+</li>
+<li><p><strong><code>&lt;query&gt;</code></strong> : 查询字符串，<code>GET</code>请求传递参数；</p>
+</li>
+<li><p><strong><code>&lt;hash&gt;</code></strong> : 片段，定位文档位置；</p>
+</li>
+</ul>
+<blockquote>
+<h4 id="HTTP-协议有几种和服务器交互的方法"><a href="#HTTP-协议有几种和服务器交互的方法" class="headerlink" title="HTTP 协议有几种和服务器交互的方法"></a><strong>HTTP 协议有几种和服务器交互的方法</strong></h4></blockquote>
+<ul>
+<li><p><strong>GET</strong> : 请求服务器资源；</p>
+</li>
+<li><p><strong>POST</strong> : 向服务器发送数据，比如发送表单数据；</p>
+</li>
+<li><p><strong>HEAD</strong> : 请求服务器资源，但是服务器的响应中没有资源的body，只有资源的基本信息。可以用来获取资源元信息，通过状态吗查看资源是否存在，以及测试资源是否被修改；</p>
+</li>
+<li><p><strong>TRACE</strong> : 远程诊断服务器；</p>
+</li>
+<li><p><strong>PUT</strong> : 向服务器写入资源。让服务器用请求的主体部分创建一个请求 URL 命名的文档，如果存在就替换。出于安全原因，并不是所有的服务器都实现这个方法；</p>
+</li>
+<li><p><strong>DELETE</strong> : 删除服务器上的请求的资源。出于安全原因，服务器可能会不支持这个方法；</p>
+</li>
+<li><p><strong>OPTIONS</strong> : 询问服务器可以执行哪些方法；</p>
+</li>
+<li><p><strong>CONNECT</strong> : 用于代理进行传输，如使用SSL；</p>
+</li>
+<li><p>……</p>
+</li>
+</ul>
+<blockquote>
+<h4 id="状态码-200，301，-304，403-404-500，503-分别代表什么意思"><a href="#状态码-200，301，-304，403-404-500，503-分别代表什么意思" class="headerlink" title="状态码 200，301， 304，403, 404, 500，503 分别代表什么意思"></a><strong>状态码 200，301， 304，403, 404, 500，503 分别代表什么意思</strong></h4></blockquote>
+<ul>
+<li><p><strong>200 : OK</strong>  这是我们最想看到的状态码。服务器已经成功处理客户端发来的请求。由于和服务器交互方法的不同，返回的信息有所不同：使用 GET 方法时，对应请求资源的实体会随着状态码一起作为响应返回；而使用 HEAD 方法时，在响应中只返回首部，不会返回实体的主体部分；</p>
+</li>
+<li><p><strong>301 : Moved Permanently</strong>  永久性重定向。请求的资源已被分配新的URI，以后应使用资源现在所指的URI；</p>
+</li>
+<li><p><strong>304 : Not Modified</strong>  如果客户端发送了一个带条件的 GET 请求且该请求已被允许，而文档的内容（自上次访问以来或者根据请求的条件）并没有改变，则服务器应当返回这个状态码。304响应禁止包含消息体，因此始终以消息头后的第一个空行结尾;</p>
+</li>
+<li><p><strong>403 : Forbidden</strong> 服务器已经理解请求，但是拒绝执行它。这个请求不应该被重复提交,如果这不是一个 HEAD 请求，而且服务器希望能够讲清楚为何请求不能被执行，那么就应该在实体内描述拒绝的原因。当然服务器也可以返回一个404响应，假如它不希望让客户端获得任何信息;</p>
+</li>
+<li><p><strong>404 : Not Found</strong> 请求失败，请求所希望得到的资源未被在服务器上发现。404这个状态码被广泛应用于当服务器不想揭示到底为何请求被拒绝或者没有其他适合的响应可用的情况下。出现这个错误的最有可能的原因是服务器端没有这个页面。</p>
+</li>
+<li><p><strong>500 : Internal Server Error</strong> 服务器遇到了一个未曾预料的状况，导致了它无法完成对请求的处理。一般来说，这个问题都会在服务器端的源代码出现错误时出现。</p>
+</li>
+<li><p><strong>503 : Service Unavailable</strong> 由于临时的服务器维护或者 <strong>过载</strong>，服务器当前无法处理请求。这个状况是临时的，并且将在一段时间以后恢复。如果能够预计延迟时间，那么响应中可以包含一个 Retry-After 头用以标明这个延迟时间。如果没有给出这个 Retry-After 信息，那么客户端应当以处理500响应的方式处理它。</p>
+</li>
+</ul>
+<blockquote>
+<h4 id="报文有哪几部分组成？"><a href="#报文有哪几部分组成？" class="headerlink" title="报文有哪几部分组成？"></a><strong>报文有哪几部分组成？</strong></h4></blockquote>
+<p>HTTP 报文是在 HTTP 应用程序之间发送的数据块。这些数据块以一些文本形式的 <strong>元信息</strong> 开头，描述报文的内容及含义，后面跟着可选的数据部分。<br>HTTP 报文由三部分组成：</p>
+<ul>
+<li>起始行（start line）：对报文进行描述；</li>
+<li>首部 （header）：包含属性；</li>
+<li>主体（body）：包含可选的数据；</li>
+</ul>
+<blockquote>
+<h4 id="请求头的格式和作用是什么？给个范例截图说明"><a href="#请求头的格式和作用是什么？给个范例截图说明" class="headerlink" title="请求头的格式和作用是什么？给个范例截图说明"></a><strong>请求头的格式和作用是什么？给个范例截图说明</strong></h4></blockquote>
+<p>随便打开一个网页，在开发者工具的 <code>NetWork</code> 中查看 <code>Request Headers</code> ，格式如下：</p>
+<p><img src="http://7xr868.com1.z0.glb.clouddn.com/task34/RequestHeaders.png" alt=""><br>其中包含 <strong>请求方法</strong> 、 <strong>请求URI地址</strong>、 <strong>协议版本</strong>，很明显截图中的请求方法为 <code>GET</code>，请求地址为 <code>/categories</code>，协议及其版本为 <code>HTTP/1.1</code>;</p>
+<p>查看 <code>Response Headers</code>，格式如下：</p>
+<p><img src="http://7xr868.com1.z0.glb.clouddn.com/task34/ResponseHeaders.png" alt=""><br>其中包含 <strong>协议版本</strong> 、 <strong>状态码</strong>、 <strong>原因短语</strong>，很明显截图中的协议及其版本为 <code>HTTP/1.1</code>，状态码 <code>301</code>，原因短语是 <code>Moved Permanently</code>；</p>
+<blockquote>
+<h4 id="首部的格式和作用是什么？给个范例截图说明"><a href="#首部的格式和作用是什么？给个范例截图说明" class="headerlink" title="首部的格式和作用是什么？给个范例截图说明"></a><strong>首部的格式和作用是什么？给个范例截图说明</strong></h4></blockquote>
+<p><strong><em>HTTP首部字段是构成HTTP报文的要素之一。在客户端与服务器端以HTTP协议进行通信时，无论是请求还是响应都会使用首部字段，它能起到传递额外更多信息的作用。使用首部字段是为了给服务器和浏览器提供报文主体大小、所使用的语言、认证信息等内容。——《图解HTTP》</em></strong></p>
+<p>HTTP 首部基本可以分为四类：通用首部、请求首部、响应首部、实体首部。<br>HTTP 首部格式是由首部字段名和首部字段值组成，中间用冒号‘:’分隔，例如 <strong>Content-Type: text/html</strong>,字段值可有多个，例如 <strong>Keep-Alive: timeout=15, max=100</strong> 。</p>
+<ul>
+<li><p>通用首部：客户端和服务器端都能使用</p>
+<blockquote>
+<ul>
+<li>Cache-Control 控制缓存行为</li>
+<li>Connection 逐跳首部、连接的管理</li>
+<li>Date 日期，报文创建时间</li>
+<li>……</li>
+</ul>
+</blockquote>
+</li>
+<li><p>请求首部：从客户端往服务器端发送请求报文中所使用的字段，用于补充请求的附加信息、客户端信息和对响应内容相关的优先级等信息<br><img src="http://7xr868.com1.z0.glb.clouddn.com/task34/%E8%AF%B7%E6%B1%82%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5.png" alt=""><br>例如上图中:</p>
+<blockquote>
+<ul>
+<li>Accept     告诉服务器能够发送那些媒体类型</li>
+<li>Accept-Encoding 告诉服务器能够发送那些编码</li>
+<li>Accept-Language 告诉服务器能够发送那些语言</li>
+<li>Cookie     客户端字符串</li>
+<li>Host 接收请求的服务器的主机名和端口号</li>
+<li>Referer 提供了包含当前请求URI的文档的URL，告诉服务器自己来源</li>
+<li>…..（这里不再列出所有）</li>
+</ul>
+</blockquote>
+</li>
+<li><p>响应首部：由服务器端向客户端返回响应报文中所使用的字段，用于补充响应的附加信息、服务器信息以及对客户端的附加要求等信息。<br><img src="http://7xr868.com1.z0.glb.clouddn.com/task34/%E5%93%8D%E5%BA%94%E9%A6%96%E9%83%A8%E5%AD%97%E6%AE%B5.png" alt=""><br>例如上图中:</p>
+<blockquote>
+<ul>
+<li>Content-Encoding 主体编码格式</li>
+<li>Content-Type 主体的MIME</li>
+<li>ETag 主体的实体标记</li>
+<li>Last-Modified 实体最后一次修改时间</li>
+<li>Server 服务器应用软件名称和版本</li>
+<li>…..（这里不再列出所有）</li>
+</ul>
+</blockquote>
+<ul>
+<li>实体首部：针对请求报文和响应报文使用的字段。补充了资源内容，更新时间等和实体相关的信息。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<h4 id="主体的作用是什么？给个范例"><a href="#主体的作用是什么？给个范例" class="headerlink" title="主体的作用是什么？给个范例"></a><strong>主体的作用是什么？给个范例</strong></h4></blockquote>
+<p><img src="http://7xr868.com1.z0.glb.clouddn.com/task34/%E4%B8%BB%E4%BD%93.png" alt=""></p>
+<ul>
+<li>用于包含所请求的数据内容；</li>
+<li>包含着返回的 HTML 文件的内容，即全部文本。</li>
+</ul>
+<blockquote>
+<h4 id="简述浏览器缓存是如何控制的"><a href="#简述浏览器缓存是如何控制的" class="headerlink" title="简述浏览器缓存是如何控制的"></a><strong>简述浏览器缓存是如何控制的</strong></h4></blockquote>
+<p>缓存有服务器端缓存和客户端缓存（一般指浏览器缓存），这里介绍浏览器缓存机制：</p>
+<ul>
+<li><strong>HTML Meta</strong> 标签控制缓存:浏览器缓存机制，其实主要就是 HTTP 协议定义的缓存机制（如：<code>Expires</code>； <code>Cache-control</code>等）。但是也有非 HTTP协议定义的缓存机制，如使用 HTML Meta 标签，Web开发者可以在HTML页面的 <code>&lt;head&gt;</code> 节点中加入 <code>&lt;meta&gt;</code> 标签<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Pragam"</span> <span class="attr">content</span>=<span class="string">"no-cache"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上述代码的作用是告诉浏览器当前页面不被缓存，每次访问都需要去服务器拉取。使用上很简单，但只有部分浏览器可以支持，而且所有缓存代理服务器都不支持，因为代理不解析HTML内容本身。而广泛应用的还是 HTTP头信息 来控制缓存。</p>
+<ul>
+<li><p>HTTP 响应首部字段 <strong>Expires</strong>，指明缓存的具体过期日期，来控制资源何时过期。在过期时间以内，若再次发起请求，通常浏览器都不会与服务器进行任何通信，而是直接使用本地副本。不过 Expires 是 HTTP 1.0 的东西，现在默认浏览器均默认使用HTTP 1.1，所以它的作用基本忽略。Expires 的一个缺点就是，返回的到期时间是服务器端的时间，这样存在一个问题，如果客户端的时间与服务器的时间相差很大（比如时钟不同步，或者跨时区），那么误差就很大，所以在HTTP 1.1版开始，使用Cache-Control: max-age=秒替代。</p>
+</li>
+<li><p><strong>Cache-Control</strong> HTTP 1.1 协议新增的指令，每个资源都可以通过设定 Cache-Control 来建立缓存策略。通常，可为它指定一个   <code>max-age</code> ，表示缓存的最长时间，单位为秒。</p>
+<ul>
+<li>no-cache，不缓存。</li>
+<li>public，可以缓存。</li>
+<li>no-store，请求和响应的信息都不应该被存储在对方的磁盘系统中。</li>
+<li>must-revalidate，对于客户机的每次请求，代理服务器必须向服务器验证缓存是否过时。</li>
+</ul>
+</li>
+<li><p>控制文件是否有修改 <strong>Last-Modified</strong>/<strong>E-Tag</strong> Last-Modified 表示被请求资源在服务器端的上次修改时间，而 ETag 则是一个唯一文件标识符，每次文件修改后都会生成一个新的 ETag。服务器通过向浏览器发送这两个字段，来告知浏览器其获得的资源的版本。由于 Last-Modified 和 ETag 的作用是相同的（均为向服务器验证资源是否最新），因此只使用一个即可。通常认为 Last-Modified 更好（它和 Expires 不同，由服务器生成，不依赖浏览器端时间）。</p>
+</li>
+<li><p>……</p>
+</li>
+</ul>
+<blockquote>
+<h4 id="下图各个参数是什么意思"><a href="#下图各个参数是什么意思" class="headerlink" title="下图各个参数是什么意思"></a><strong>下图各个参数是什么意思</strong></h4></blockquote>
+<p><img src="http://7xpvnv.com2.z0.glb.qiniucdn.com/257149f7-1e11-4262-9b15-159389db83c6" alt=""></p>
+<p>1.<strong>General</strong></p>
+<ul>
+<li>Reques URL : 请求资源所在的位置（资源的URL）；</li>
+<li>Request Method : 请求用的是 PUT 方法；</li>
+<li>Status Code : 状态码和原因短语是 200 OK，资源请求成功；</li>
+<li>Remote Address：远程地址。资源所在 IP 地址。</li>
+</ul>
+<p>2.<strong>Response Headers</strong></p>
+<ul>
+<li>Connection：指定连接方式，持久连接；</li>
+<li>Content-Length：主体部分的大小，单位是字节；</li>
+<li>Content-Type：主体内对象的媒体类型，是 json 文件；</li>
+<li>Date：报文创建的日期时间（GMT时间）；</li>
+<li>Server：服务器软件版本信息；</li>
+<li>X-Powered-By：开发资源的技术；是 Express;</li>
+</ul>
+<p>3.<strong>Request Headers</strong></p>
+<ul>
+<li>Accept：能够处理的媒体类型及其相对优先级。<code>*/*</code> 可以处理与请求相符的任意媒体类型;</li>
+<li>Accept-Encoding：用户代理支持的内容编码及内容编码的优先级顺序。接受gzip、deflate 和 sdch 格式;</li>
+<li>Accept-Language：用户代理能够处理的自然语言集。接受中文;</li>
+<li>Cookie：之前从服务器获得的 Cookie 信息。</li>
+<li>Host：资源所在的主机;</li>
+<li>Origin：资源所在的源。包括主机，协议和端口号;</li>
+<li>Referer：服务器请求的原始资源的 URI；</li>
+<li>User-Agent：发出请求的客户端（浏览器）信息和用户代理名称；</li>
+<li>X-Requested-With：用何种方式请求。这里使用的是 ajax；</li>
+</ul>
+<hr>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E5%8D%9A%E5%AE%A2%E5%BE%AE%E4%BF%A1%E8%AE%A2%E9%98%85%E5%8F%B7.jpg" alt="蓝岚 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果您喜欢，请随意打赏。您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E5%BE%AE%E4%BF%A1%E6%89%93%E8%B5%8F%E9%9A%8F%E6%84%8F.png" alt="蓝岚 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%89%93%E8%B5%8F%E9%9A%8F%E6%84%8F.jpg" alt="蓝岚 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web服务器/" rel="tag"># Web服务器</a>
+          
+            <a href="/tags/前后端/" rel="tag"># 前后端</a>
+          
+            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+          
+            <a href="/tags/TCP-IP/" rel="tag"># TCP/IP</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/07/从URI到页面呈现/" rel="next" title="从 URI 到页面呈现">
+                <i class="fa fa-chevron-left"></i> 从 URI 到页面呈现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/10/OOP-For-JavaScript/" rel="prev" title="OOP For JavaScript">
+                OOP For JavaScript <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ffc85abe3ee8ee" async = "async" ></script>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/07/了解-HTTP/"
+           data-title="了解 HTTP" data-url="http://licao404.com/2016/05/07/了解-HTTP/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xr868.com1.z0.glb.clouddn.com/me.jpg"
+               alt="蓝岚" />
+          <p class="site-author-name" itemprop="name">蓝岚</p>
+          <p class="site-description motion-element" itemprop="description">一生想做浪漫极客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="Mailto:15720600373@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope-o"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2806327437/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://coolshell.cn/" title="酷壳" target="_blank">酷壳</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#OSI-七层模型指什么？"><span class="nav-number">1.</span> <span class="nav-text">OSI 七层模型指什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-的工作原理是什么？"><span class="nav-number">2.</span> <span class="nav-text">HTTP 的工作原理是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#URI-的格式是什么？常见的协议有哪些？"><span class="nav-number">3.</span> <span class="nav-text">URI 的格式是什么？常见的协议有哪些？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-协议有几种和服务器交互的方法"><span class="nav-number">4.</span> <span class="nav-text">HTTP 协议有几种和服务器交互的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#状态码-200，301，-304，403-404-500，503-分别代表什么意思"><span class="nav-number">5.</span> <span class="nav-text">状态码 200，301， 304，403, 404, 500，503 分别代表什么意思</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#报文有哪几部分组成？"><span class="nav-number">6.</span> <span class="nav-text">报文有哪几部分组成？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#请求头的格式和作用是什么？给个范例截图说明"><span class="nav-number">7.</span> <span class="nav-text">请求头的格式和作用是什么？给个范例截图说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#首部的格式和作用是什么？给个范例截图说明"><span class="nav-number">8.</span> <span class="nav-text">首部的格式和作用是什么？给个范例截图说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主体的作用是什么？给个范例"><span class="nav-number">9.</span> <span class="nav-text">主体的作用是什么？给个范例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简述浏览器缓存是如何控制的"><span class="nav-number">10.</span> <span class="nav-text">简述浏览器缓存是如何控制的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下图各个参数是什么意思"><span class="nav-number">11.</span> <span class="nav-text">下图各个参数是什么意思</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script> -->
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-cogs"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">蓝岚</span>
+  <!-- <span id="busuanzi_container_site_pv" style='display: none'>
+    &nbsp; | &nbsp;您是本站第<span id="busuanzi_value_site_pv"></span>位小伙伴
+</span> -->
+</div>
+
+<div class="powered-by">
+  Power by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+  &nbsp;&nbsp; | &nbsp;&nbsp;<a id="translateLink" href="javascript:translatePage();">繁體</a>
+</div>
+
+<script type="text/javascript" src="http://7xrvo9.com1.z0.glb.clouddn.com/tw_cn.js"></script>
+<script type="text/javascript">
+  var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+  var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+  var cookieDomain = "http://www.licao404.com/"; //Cookie地址, 一定要设定, 通常为你的网址
+  var msgToTraditionalChinese = "繁體"; //此处可以更改为你想要显示的文字
+  var msgToSimplifiedChinese = "简体"; //同上，但两处均不建议更改
+  var translateButtonId = "translateLink"; //默认互换id
+  translateInitilization();
+</script>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"> 本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"licao404"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("eU0wbE0RUcORq7vQxOaLmU26-gzGzoHsz", "Gtpg553mTGDAVFS7WKsPbSA3");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  
+
+
+</body>
+</html>

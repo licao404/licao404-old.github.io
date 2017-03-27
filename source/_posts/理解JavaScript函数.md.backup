@@ -1,0 +1,310 @@
+---
+title: 理解JavaScript函数
+date: 2016-03-16 21:51:40
+categories: [编程学习,前端基础]
+tags: JavaScript
+---
+## -【知识点】
+
+### **1. -F：函数声明和函数表达式有什么区别？**
+### **-Q：**
+> 先自我回忆一下编程语言中函数的广泛`概念`：函数是指可以将一系列语句组成一个整体（`打包`在一个代码段中），以执行某一特定任务。如果在不同的地方有些任务要重复执行，则可以`重用函数`。
+<!--more-->
+* `函数声明`：为了让函数能够被其他位置的代码调用，必须给他指定一个名称，也就是命名函数；函数的定义是提前的，也就意味着函数可以在被声明之前的位置被调用。例如声明一个名为`area()`的函数：
+
+```javascript
+	var size = area(10,15);
+	console.log(size);//输出150，调用成功
+
+	function area(w,h){
+		return w*h;
+	}
+```
+
+* `函数表达式`： 如果将函数放在表达式的位置，那他就看作为表达式。函数表达式中经常省略函数名，即匿名函数；在函数表达式之前是不能调用此函数的，上面的例子改为如下，情况就有所不同了：
+
+```javascript
+	console.log(size);//输出Undefined，未能调用
+
+	var size = function(w,h){
+    	return w*h;
+	};
+```
+
+### **2. -F：什么是变量的声明前置？什么是函数的声明前置？**
+### **-Q：**
+
+* `变量的声明前置`：
+   * JavaScript的变量声明具有hoisting机制，JavaScript引擎在执行的时候，会把所有变量的声明都提升到`当前作用域`的最前面，先于其他代码首先被执行。
+   * 使用var关键词声明变量的作用域是当前的执行上下文，有可能是外围函数，或者，当变量声明在函数体之外时，则为全局变量；未声明的变量总是全局的。
+* `函数的声明前置`：
+   * 如上一问中的函数声明的例子，函数声明并不仅仅是函数名“被提前”了，整个函数的定义也“被提前”了，所以我们可以在任何位置调用函数；但是对于函数表达式就如同变量声明前置一样；同一个标示符，先后用`var`和`function`声明它,`var`的优先级高于`function`。
+
+### **3. -F：arguments 是什么？**
+### **-Q:**
+
+> `arguments`是函数的`类数组对象`，是当前函数的一个内置属性:
+  
+  * `ECMAScript`函数的参数在内部是用一个数组来表示的，在函数体内可以通过`arguments`对象来访问这个数组,从而获得传入函数的每一个参数。例如`arguments[0]`是传入的第一个参数；
+  *  `arguments`对象的长度是由实参个数而不是形参个数决定的,就是说使用`length`属性来确定传入的参数的个数。
+
+
+### **4. -F：函数的重载怎样实现？**
+### **-Q:**
+> 函数重载其他面向对象语言实现多态的手段之一，我们可以为一个函数编写两个定义，前提是只要这两个函数签名不同（参数、类型或顺序不同），就可以实现函数重载。然而`JavaScript`函数从语言角度来说是没有重载的，这一点从前面的函数声明和调用特性可以看出。
+  
+  * 难道说JavaScript注定和重载无缘了？莫急...JavaScript可以通过自身的属性去模拟函数重载,法宝一：`if`+`arguments.length`:
+  
+  ```javascript
+  function calculate() {
+    if (arguments.length == 2) {
+        return arguments[0] + arguments[1];
+    } 
+    if (arguments.length == 3) {
+        return arguments[0] * arguments[1] * arguments[2];
+    } 
+  }
+
+  alert(calculate(1, 3))//4
+  ```
+  * 更多法宝持续更新......
+  
+
+### **5. -F：立即执行函数表达式是什么？有什么作用?**
+### **-Q:**
+> 两种常见立即执行函数的写法:
+  
+  ```javascript
+  (function(){
+	//函数体
+  })()
+  
+  //或者： 
+  (function(){
+	//函数体
+  }()) 
+  ```
+* 作用：
+ 1. 封装一段代码而不会引起而不会遗留任何全局变量，定义的变量都是立即执行函数的局部变量;
+ 2. 将独立的功能封装在自包含模块中(self-contained modules);
+ 3. 挡页面是稳定的并且在没有JavaScript情况下能正常工作，然后本着逐步加强的想法，需要一些代码加强页面某个方面，可以将这些代码封装进一个立即执行函数中，并且确保页面没有它的情况下也能正常工作;
+
+### **6. -F：什么是函数的作用域链?**
+### **-Q:**
+> 作用域就是变量和函数的可访问`范围`，控制着变量和函数的可见性与`生命周期`，JavaScript并没有块及的作用域，只有函数作用域：变量在声明它们的函数体及其子函数内是可见的。
+
+* 变量没有在函数内声明或者声明的时候没有带`var`就是全局变量，拥有全局作用域;
+* 函数内部声明并且以`var`修饰的变量就是局部变量，只能在函数体内使用，函数的参数虽然没有使用var但仍然是局部变量。
+
+---
+## -【练习】
+### **1.以下代码输出什么？**
+
+```javascript
+    function getInfo(name, age, sex){
+        console.log('name:',name);
+        console.log('age:', age);
+        console.log('sex:', sex);
+        console.log(arguments);
+        arguments[0] = 'valley';
+        console.log('name', name);
+    }
+
+    getInfo('hunger', 28, '男');//name:hunger age:28 sex:男 ["hunger",28,"男"]
+    getInfo('hunger', 28);//name:hunger age:28 sex:undefined ["hunger",28]
+    getInfo('男');//name:男 age:undefined sex:undefined ["男"]
+```
+
+### **2.写一个函数，返回参数的平方和？如:**
+
+```javascript
+   function sumOfSquares(){
+   		var sum = 0;
+   		for(var i=0;i<arguments.length;i++){
+   			sum += arguments[i]*arguments[i]
+   		}
+   		console.log(sum);
+   }
+   sumOfSquares(2,3,4);   // 29
+   sumOfSquares(1,3);   // 10
+```
+
+### **3..如下代码的输出？为什么?**
+
+```javascript
+    console.log(a);//输出undefined
+    var a = 1;
+    console.log(b);//会报未有声明的错
+```
+> 根据变量声明提前，将以上函数改写为以下形式，声明了`a`并未赋值，`console.log(a)`为`defined`,`b`没有声明。
+
+```javascript
+	var a;
+	console.log(a);
+	a = 1;
+	console.log(b);
+```
+
+### **4.如下代码的输出？为什么?**
+
+```javascript
+    sayName('world');
+    sayAge(10);
+    function sayName(name){
+        console.log('hello ', name);//hello world
+    }
+    var sayAge = function(age){
+        console.log(age);//会报`sayAge`不是函数的错
+    };
+```
+> 根据变量声明前置，函数整体前置，函数表达式声明前置，将以上函数改写为以下形式: sayName('world')成功调用函数;
+
+```javascript
+	var sayAge;//sayAge是一个变量
+    function sayName(name){
+        console.log('hello ', name);//hello world
+    }
+    
+    sayName('world');
+    sayAge(10);//函数表达式在他下面，sayAge不能解析为函数
+    sayAge = function(age){
+        console.log(age);
+    };
+```
+
+### **5.如下代码的输出？为什么?**
+
+```javascript
+    function fn(){}
+    var fn = 3;
+    console.log(fn);//输出3
+ 
+//*************输出结果及分析***************    
+//可以改写为：
+	var fn;//变量声明提前，优先级高于函数，所以fn是一个变量
+	function fn(){}
+	fn = 3;//将变量fn赋值为3
+	console.log(fn);
+```
+
+
+### **6.下面代码的输出是? 为什么?**
+
+```javascript
+    function fn(fn2){
+       console.log(fn2);
+       var fn2 = 3;
+       console.log(fn2);
+       console.log(fn);
+       function fn2(){
+            console.log('fnnn2');
+        }
+     }
+    fn(10);
+  
+//*************输出结果及分析***************  
+    //1.首先输出：
+    function fn2(){
+            console.log('fnnn2');
+        } //先声明了变量fn2，并给他赋值为函数，输出fn2也就是输出函数fn2
+   	//2.然后对fn2进行了覆盖赋值，输出3
+   	//3.最后向上一级级查询到函数fn()，输出：
+   	function fn(fn2){
+       console.log(fn2);
+       var fn2 = 3;
+       console.log(fn2);
+       console.log(fn);
+       function fn2(){
+            console.log('fnnn2');
+        }
+     }      	
+```
+
+### **7.下面代码的输出是? 为什么?**
+
+```javascript
+    var fn = 1;
+    function fn(fn){
+         console.log(fn);
+    }
+    console.log(fn(fn)); 
+    
+//*************输出结果及分析***************
+//给变量fn赋值为1，fn是number类型，再输出fn(fn),会报错！fn当然不是一个函数
+```
+
+### **8.下面代码的输出是? 为什么?**
+
+```javascript
+    //作用域
+    console.log(j);//undefined for循环里面声明的变量是全局变量，未赋值
+    console.log(i);//undefined 同上
+    for(var i=0; i<10; i++){
+        var j = 100;
+    }
+    console.log(i);//10 执行循环后i的值
+    console.log(j);//100 同上
+```
+
+### **9.下面代码的输出是? 为什么?**
+
+```javascript
+    fn();
+    var i = 10;
+    var fn = 20;
+    console.log(i);
+    function fn(){
+        console.log(i);
+        var i = 99;
+        fn2();
+        console.log(i);
+        function fn2(){
+            i = 100;
+        }
+    }
+    
+//*************输出结果及分析***************
+//老办法，改写为：
+	var i,fn;
+	function fn(){
+		var i
+		function fn2(){
+            i = 100;
+        }
+        console.log(i);//输出undefined,在函数fn()内声明了局部变量i但是没有赋值
+        i = 99;
+        fn2();//调用函数fn2()，i赋值为100
+        console.log(i);
+    }
+    fn();
+    i = 10;//最后i赋值为10
+    fn = 20;
+    console.log(i);
+```
+
+### **10.下面代码的输出是? 为什么?**
+
+```javascript
+    var say = 0;
+    (function say(n){
+        console.log(n);
+        if(n<3) return;
+        say(n-1);
+    }( 10 ));
+    console.log(say);
+    
+//*************输出结果及分析*************** 
+    //依次输出10 9 8 7 6 5 4 3 2 0
+    //立即执行函数域链只在内部，不影响立即执行函数之外的变量，所以console.log(say)输出0
+```
+
+---
+> 参考：
+
+> * [JavaScript变量声明详解](http://www.jb51.net/article/57888.htm)
+* [javascript变量声明提升(hoisting)](http://www.cnblogs.com/silentjesse/p/4024536.html)
+* [Bootstrap中文网](http://www.bootcss.com/article/variable-and-function-hoisting-in-javascript/)
+* [JavaScript|MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/arguments)
+* [javascript函数重载](http://www.cnblogs.com/bluedream2009/archive/2011/01/05/1925963.html)
+* [立即执行函数](http://blog.csdn.net/qq838419230/article/details/8030078)
+* [JavaScript:函数的作用域链](http://www.cnblogs.com/ziyunfei/archive/2012/11/17/2768967.html)

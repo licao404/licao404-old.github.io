@@ -1,0 +1,1181 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="XbkMTn0NEANG-vDVITHx2Gnz8X7Yj0lvkXmj6291KDY" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="转载,干货,字符编码," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="蓝岚爱肉肉" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前端开发过程中会接触各种各样的编码，比较常见的主要是UTF－8和HTML实体编码，但是web前端的世界却不止这两种编码，而且编码的选择也会造成一定的问题，如前后端开发过程中不同编码的兼容、多字节编码可能会造成的XSS漏洞等。因此，本文旨在更好的全面了解涉及前端开发领域的字符编码，避免可能出现的交互和开发中的忽视的漏洞。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【转】前端开发中的字符编码">
+<meta property="og:url" content="http://licao404.com/2016/05/12/【转】前端开发中的字符编码/index.html">
+<meta property="og:site_name" content="蓝岚爱肉肉">
+<meta property="og:description" content="前端开发过程中会接触各种各样的编码，比较常见的主要是UTF－8和HTML实体编码，但是web前端的世界却不止这两种编码，而且编码的选择也会造成一定的问题，如前后端开发过程中不同编码的兼容、多字节编码可能会造成的XSS漏洞等。因此，本文旨在更好的全面了解涉及前端开发领域的字符编码，避免可能出现的交互和开发中的忽视的漏洞。">
+<meta property="og:image" content="http://7xrvo9.com1.z0.glb.clouddn.com/2016.0512/meiziCoder2.jpg">
+<meta property="og:updated_time" content="2016-05-12T01:30:30.733Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【转】前端开发中的字符编码">
+<meta name="twitter:description" content="前端开发过程中会接触各种各样的编码，比较常见的主要是UTF－8和HTML实体编码，但是web前端的世界却不止这两种编码，而且编码的选择也会造成一定的问题，如前后端开发过程中不同编码的兼容、多字节编码可能会造成的XSS漏洞等。因此，本文旨在更好的全面了解涉及前端开发领域的字符编码，避免可能出现的交互和开发中的忽视的漏洞。">
+<meta name="twitter:image" content="http://7xrvo9.com1.z0.glb.clouddn.com/2016.0512/meiziCoder2.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6261706695056033000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://licao404.com/2016/05/12/【转】前端开发中的字符编码/"/>
+
+  <title> 【转】前端开发中的字符编码 | 蓝岚爱肉肉 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?50dccebe8271dcccd782178e2cdbbc52";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s95.cnzz.com/z_stat.php?id=1258087445&web_id=1258087445" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">蓝岚爱肉肉</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Gardon Lee's Blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-file-text"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+        <li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()    '>[High起来]</a> </li>
+
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '7PcwcK-5yqhMrUDyc-y-','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【转】前端开发中的字符编码
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-12T08:28:36+08:00" content="2016-05-12">
+              2016-05-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/编程学习/" itemprop="url" rel="index">
+                    <span itemprop="name">编程学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/编程学习/前端高级/" itemprop="url" rel="index">
+                    <span itemprop="name">前端高级</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/12/【转】前端开发中的字符编码/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/12/【转】前端开发中的字符编码/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/05/12/【转】前端开发中的字符编码/" class="leancloud_visitors" data-flag-title="【转】前端开发中的字符编码">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <img src="http://7xrvo9.com1.z0.glb.clouddn.com/2016.0512/meiziCoder2.jpg" class="full-image" alt="alt">
+<blockquote class="blockquote-center">前端开发过程中会接触各种各样的编码，比较常见的主要是UTF－8和HTML实体编码，但是web前端的世界却不止这两种编码，而且编码的选择也会造成一定的问题，如前后端开发过程中不同编码的兼容、多字节编码可能会造成的XSS漏洞等。因此，本文旨在更好的全面了解涉及前端开发领域的字符编码，避免可能出现的交互和开发中的忽视的漏洞。</blockquote>
+
+<a id="more"></a>
+<h3 id="URL编码"><a href="#URL编码" class="headerlink" title="URL编码"></a>URL编码</h3><p>我曾经在 <strong>URL编码解码和base64</strong> 一文中讲述了URL编码中的三组函数，并对比了这三组函数与base64编码的关系，在此简要说明一下。</p>
+<p><code>escape/unescape</code> 函数针对宽字符做 <code>unicode</code> 编码，并针对码值做十六进制编码，所以使用 <code>escape</code> 针对汉字编码会得到形如 “\uxxxx”      的结果；<code>encodeURI/decodeURI</code>,<code>encodeURIComponent/decodeURIComponent</code> 函数针对宽字节编码却不同于 <code>escape</code> ，首先针对宽字节字符进行 <code>UTF－8</code> 编码，然后针对编码后的结果进行“％”替换，得到结果。以上所述都是针对宽字节字符而言，对于编码靠前的 <code>ASCII</code> 字符而言，上述三组函数的安全字符的范围也有所不同，具体可在上文中了解。</p>
+<h3 id="base64编码"><a href="#base64编码" class="headerlink" title="base64编码"></a>base64编码</h3><p><code>base64</code> 编码在前端通常用于图片和 <code>icon</code> 的编码，它将每3个8位字节为一组，分成4组6位字节，并且每个字节的高位补零，形成4个8位的字节，由此可看出 <code>base64</code> 编码是可逆推的。在大多数浏览器中，提供了ASCII字符的 <code>base64</code> 编码函数，即 <code>window.btoa()</code> 。该函数无法针对宽字节进行 <code>base64</code> 编码，若针对中文编码，则需现转换位 <code>UTF－8</code> 编码，然后进行 <code>base64</code> 编码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unicodeToBase64</span>(<span class="params">s</span>)</span>&#123; <span class="keyword">return</span> <span class="built_in">window</span>.btoa(<span class="built_in">unescape</span>(<span class="built_in">encodeURIComponent</span> (s))) &#125;</span><br></pre></td></tr></table></figure>
+<p>通过encodeURIComponent对宽字节字符编码，是“％xx”形式的编码，与UTF8编码的区别仅在于前缀（这是由规范RFC3986决定的，将非ASC字符进行某种形式编码，并转换为16进制，并在字节前加上“％”）。因此通过unescape(encodeURIComponent(s))可以转化为UTF8字节。当然，也可自己写一个转换函数，按照一定规则便行为UTF－8编码的字节，如下例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unescape</span>(<span class="built_in">encodeURIComponent</span> (<span class="string">"中国"</span>))<span class="comment">//结果："ä¸­å½"</span></span><br><span class="line"><span class="built_in">encodeURIComponent</span> (<span class="string">"中国"</span>)<span class="comment">//结果："%E4%B8%AD%E5%9B%BD"</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"\u00E4\u00B8\u00AD\u00E5\u009B\u00BD"</span>)<span class="comment">//结果：ä¸­å½</span></span><br></pre></td></tr></table></figure>
+<p>通过简单的replace函数，就可以完成URL编码到UTF8编码的转换，进而完成宽字节字符到base64编码的转换。有了这个函数，我们手动生成一些data URI形式的内容，只需制定MIME类型和编码方式，就可以实现文本的转换，如以下代码：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href="data:text/html;charset=utf-8;base64,PHNjcmlwdD5hbGVydCgxMik8L3NjcmlwD4="&gt;abc&lt;/a&gt;</span><br><span class="line">//未编码前：&lt;a href="javascript: alert(1)"&gt;test&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="前端UTF8编码与后端GBK编码的兼容"><a href="#前端UTF8编码与后端GBK编码的兼容" class="headerlink" title="前端UTF8编码与后端GBK编码的兼容"></a>前端UTF8编码与后端GBK编码的兼容</h3><p>目前前端大都采用UTF8进行编码，不管是html、js抑或是css，而后端则由于历史原因大都采用GBK或GB2312进行解码，因此前端通过parameter传递的URL编码的字符串就不可能直接在后台进行解码，为了更好的兼容性，前端可进行两次URL编码，即encodeURIComponent（encodeURIComponent（“中国”）），这样后端接收到参数后，先使用GBK或GB2312解码，得到了UTF8编码后再使用UTF8解码即可。两次编码主要是利用“ASC字符使用GBK或GB2312编码不变”的特点完成，富有技巧。</p>
+<h3 id="HTML实体编码与进制编码"><a href="#HTML实体编码与进制编码" class="headerlink" title="HTML实体编码与进制编码"></a>HTML实体编码与进制编码</h3><p>实体编码针对HTML的预留字符而言，如“&lt;&gt;”等。实体编码有两种形式<code>&amp;</code>实体名;或 <code>&amp;entity_number</code>;，由于浏览器对 <code>&amp;</code> 实体名 <code>;</code> 的兼容性有差别，因此最好采用实体号的形式编码。</p>
+<p>进制编码，顾名思义将 <code>ASC</code> 字符对应的码值按照十六进制或十进制编码，并转化为 <code>&amp;#x</code>;(16进制)或 <code>&amp;#D</code>;(10进制)形式。</p>
+<p>单单针对实体编码而言并没有什么特殊强调的点，之所以把它单独列为一个章节，意在强调这两种编码与js代码的作用域的关系。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onclick</span>=<span class="string">"document.write(&lt;img src=1 onerror=alert(23)&gt;')"</span>&gt;</span>ccc<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onclick</span>=<span class="string">"document.write('&amp;lt;img src=1 onerror=alert(23)&amp;gt;')"</span>&gt;</span>ccc<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">&amp;#x3c;&amp;#x69;&amp;#x6d;&amp;#x67;&amp;#x20;&amp;#x73;&amp;#x72;&amp;#x63;&amp;#x3d;&amp;#x31;&amp;#x20;&amp;#x6f;&amp;#x6e;&amp;#x65;&amp;#x72;&amp;#x72;&amp;#x6f;&amp;#x72;&amp;#x3d;&amp;#x61;&amp;#x6c;&amp;#x65;&amp;#x72;&amp;#x74;&amp;#x28;&amp;#x32;&amp;#x33;&amp;#x29;&amp;#x3e;</span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">1</span> <span class="attr">onerror</span>=<span class="string">&amp;#x61;&amp;#x6c;&amp;#x65;&amp;#x72;&amp;#x74;&amp;#x28;&amp;#x32;&amp;#x33;&amp;#x29;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">'&amp;lt;img src=1 onerror=alert(23)&amp;gt;'</span>);</span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">'&lt;img src=1 onerror=&amp;#x61;&amp;#x6c;&amp;#x65;&amp;#x72;&amp;#x74;&amp;#x28;&amp;#x33;&amp;#x29;&gt;'</span>);</span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">'&amp;#x3c;&amp;#x69;&amp;#x6d;&amp;#x67;&amp;#x20;&amp;#x73;&amp;#x72;&amp;#x63;&amp;#x3d;&amp;#x31;&amp;#x20;&amp;#x6f;&amp;#x6e;&amp;#x65;&amp;#x72;&amp;#x72;&amp;#x6f;&amp;#x72;&amp;#x3d;&amp;#x61;&amp;#x6c;&amp;#x65;&amp;#x72;&amp;#x74;&amp;#x28;&amp;#x32;&amp;#x33;&amp;#x29;&amp;#x3e;'</span>);</span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">'\u003c\u0069\u006d\u0067\u0020\u0073\u0072\u0063\u003d\u0031\u0020\u006f\u006e\u0065\u0072\u0072\u006f\u0072\u003d\u0061\u006c\u0065\u0072\u0074\u0028\u0032\u0033\u0029\u003e'</span>)</span><br><span class="line"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>代码中列举了8个例子，第一个在事件处理函数onclick中输出HTML片段；第二个则输出经实体编码后的HTML片段；第三个则是直接针对 <code>&lt;img src=1 onerror=alert(23)&gt;</code> 做16进制编码；第四个则是针对onerror事件处理函数做16进制编码；第五个则是在脚本中输出实体编码的字符；第六个针对事件处理函数做16进制编码；第七个则针对所有的字符做16进制编码；第八个则是在script中直接输出 <code>&lt;img src=1 onerror=alert(23)&gt;</code> 的unicode编码。</p>
+<p>对比结果，前两个例子在点击后都会弹出alert；第三个例子则在页面中显示文本 <code>&lt;img src=1 onerror=alert(23)&gt;</code> ；第四个例子则会在页面加载初期弹出alert；第五、七会输出字符串；第六、八则会在第四个例子中的alert之后也弹出alert。现在分析这些结果，通过第一二个例子可知道，HTML标签中（除script标签）的内联js代码可以进行HTML实体编码，这是非常重要的一点，我们可以更为明确的进行验证：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onclick</span>=<span class="string">"alert('&amp;lt;img src=1 onerror=alert(23)&amp;gt;')"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>输出的结果自然是 <code>&lt;img src=1onerror=alert(23)&gt;</code>，这的确论证了我们上文提到的这一点；第三个例子说明了HTML解析器在进行词法分析前，首先进行解码，十六进制和十进制皆可，因此，结果自然输出形如 <code>&lt;img src=1 onerror=alert(23)&gt;</code> 的字符串；第四个例子则紧接着论证了内联在HTML的并采用十六进制编码的js代码同样会被正确解析并执行，这说明了进制编码同样可被HTML解析器解析；第五、七个例子说明在js中同样可以使用实体编码和进制编码，解析的结果会渲染在页面上；第六个例子则论证了上一观点，只针对事件处理函数做进制编码，执行后页面弹出alert；第八个例子则是在js中执行unicode编码的字符串，正常alert。</p>
+<p>由此可见，js代码内联在HTML的非script标签内，则会遵守HTML编码规范：进制编码和实体编码；而在js代码（script标签内以及js文件内）中，则遵从js编码：1,unicode形式编码(\uxxxx)2,普通的16进制编码(\xH)，这可通过第八个例子得到证明。之所以在本节提到这么多编码特点，主要提醒大家在预防XSS时需要注意的几点：</p>
+<ul>
+<li><p>检测用户输入时，不仅仅需要防范类似“&lt;&gt;”这样的字符，通过unicode编码或进制编码仍有可能注入代码</p>
+</li>
+<li><p>需要针对特定的关键字做过滤，如“eval、write、prototype”</p>
+</li>
+<li><p>尽可能禁止内联事件处理函数的使用</p>
+</li>
+<li><p>js过滤“src/href/action”属性，如“javascript:”,”data:”</p>
+</li>
+</ul>
+<h3 id="JS编码"><a href="#JS编码" class="headerlink" title="JS编码"></a>JS编码</h3><p>其实在上节中已提到了js编码，即js可执行unicode编码和十六（八）进制编码后的字符串，但是不支持十进制编码的字串。具体操作可通过常用的几个函数来实现，如“eval，write，setTimeout，Function”执行编码后的字符串；同样，对于十进制编码的字串，通过结合String.fromCharCode和eval同样可以执行。</p>
+<p>在此附上笔者实现的字符转换，更为灵活的实现各种自定义形式的字串编码:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Code = &#123;&#125;;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     *</span><br><span class="line">     * @param str 待编码字串</span><br><span class="line">     * @param jinzhi 进制编码</span><br><span class="line">     * @param prefix 前缀</span><br><span class="line">     * @param postfix 后缀</span><br><span class="line">     * @param count 总共编码的位数，默认为4</span><br><span class="line">     * @returns &#123;string&#125;</span><br><span class="line">     */</span></span><br><span class="line">    Code.encode = <span class="function"><span class="keyword">function</span>(<span class="params">&#123;str = '',jinzhi = '16',prefix = '\\u',postfix = ';',count = '4'&#125; = &#123;&#125;</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> ret = <span class="string">''</span>;</span><br><span class="line">        <span class="keyword">var</span> addZero,tmp;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;str.length;i++)&#123;</span><br><span class="line">            tmp = str.charCodeAt(i).toString(jinzhi);</span><br><span class="line">            addZero = count - tmp.length + <span class="number">1</span>;</span><br><span class="line">            ret += prefix + <span class="keyword">new</span> <span class="built_in">Array</span>(addZero).join(<span class="string">'0'</span>) + tmp + postfix;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;;</span><br><span class="line">    Code.decode = <span class="function"><span class="keyword">function</span>(<span class="params">&#123;str = '',jinzhi = '16',prefix = '\\u',postfix = ';'&#125; = &#123;&#125;</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> ret = <span class="string">''</span>;</span><br><span class="line">        <span class="keyword">var</span> splits = str.split(<span class="string">';'</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;splits.length;i++)&#123;</span><br><span class="line">            <span class="keyword">let</span> tmp = splits[i].replace(prefix,<span class="string">''</span>);</span><br><span class="line">            ret += <span class="built_in">String</span>.fromCharCode(<span class="built_in">parseInt</span>(tmp,jinzhi));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(Code.encode(&#123;str: <span class="string">'&lt;img src=@ onerror=alert(123) /&gt;'</span>&#125;));</span><br><span class="line">    <span class="built_in">console</span>.log(Code.decode(&#123;str: Code.encode(&#123;str: <span class="string">'&lt;img src=@ onerror=alert(123) /&gt;'</span>&#125;)&#125;))</span><br></pre></td></tr></table></figure>
+<p>另外，对于js输出点的过滤其实并不仅限于上文提到的如eval、setTimeout、Function等几个，由于JS语法比较灵活相对“漏洞”较多，可使用的“线索”也越丰富，如前段时间在Stackoverflow上发现的一个问题，即</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">0</span>)[<span class="string">'constructor'</span>][<span class="string">'constructor'</span>](<span class="string">'return "abc;"'</span>)()</span><br></pre></td></tr></table></figure>
+<p>同样可以执行JS代码，确实挺有特点的，具体为什么上述形式可以执行代码，请读者自己仔细品味。</p>
+<blockquote>
+<p>本文由杭州尚妆@欲休分享  |  <a href="http://www.cnblogs.com/accordion/p/5468704.html" target="_blank" rel="external">原文</a></p>
+</blockquote>
+<hr>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E5%8D%9A%E5%AE%A2%E5%BE%AE%E4%BF%A1%E8%AE%A2%E9%98%85%E5%8F%B7.jpg" alt="蓝岚 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果您喜欢，请随意打赏。您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E5%BE%AE%E4%BF%A1%E6%89%93%E8%B5%8F%E9%9A%8F%E6%84%8F.png" alt="蓝岚 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%89%93%E8%B5%8F%E9%9A%8F%E6%84%8F.jpg" alt="蓝岚 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/转载/" rel="tag"># 转载</a>
+          
+            <a href="/tags/干货/" rel="tag"># 干货</a>
+          
+            <a href="/tags/字符编码/" rel="tag"># 字符编码</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/10/OOP-For-JavaScript/" rel="next" title="OOP For JavaScript">
+                <i class="fa fa-chevron-left"></i> OOP For JavaScript
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/12/原型链/" rel="prev" title="说清楚JavaScript的原型链">
+                说清楚JavaScript的原型链 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ffc85abe3ee8ee" async = "async" ></script>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/12/【转】前端开发中的字符编码/"
+           data-title="【转】前端开发中的字符编码" data-url="http://licao404.com/2016/05/12/【转】前端开发中的字符编码/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xr868.com1.z0.glb.clouddn.com/me.jpg"
+               alt="蓝岚" />
+          <p class="site-author-name" itemprop="name">蓝岚</p>
+          <p class="site-description motion-element" itemprop="description">一生想做浪漫极客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="Mailto:15720600373@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope-o"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2806327437/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://coolshell.cn/" title="酷壳" target="_blank">酷壳</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#URL编码"><span class="nav-number">1.</span> <span class="nav-text">URL编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#base64编码"><span class="nav-number">2.</span> <span class="nav-text">base64编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前端UTF8编码与后端GBK编码的兼容"><span class="nav-number">3.</span> <span class="nav-text">前端UTF8编码与后端GBK编码的兼容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML实体编码与进制编码"><span class="nav-number">4.</span> <span class="nav-text">HTML实体编码与进制编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS编码"><span class="nav-number">5.</span> <span class="nav-text">JS编码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script> -->
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-cogs"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">蓝岚</span>
+  <!-- <span id="busuanzi_container_site_pv" style='display: none'>
+    &nbsp; | &nbsp;您是本站第<span id="busuanzi_value_site_pv"></span>位小伙伴
+</span> -->
+</div>
+
+<div class="powered-by">
+  Power by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+  &nbsp;&nbsp; | &nbsp;&nbsp;<a id="translateLink" href="javascript:translatePage();">繁體</a>
+</div>
+
+<script type="text/javascript" src="http://7xrvo9.com1.z0.glb.clouddn.com/tw_cn.js"></script>
+<script type="text/javascript">
+  var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+  var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+  var cookieDomain = "http://www.licao404.com/"; //Cookie地址, 一定要设定, 通常为你的网址
+  var msgToTraditionalChinese = "繁體"; //此处可以更改为你想要显示的文字
+  var msgToSimplifiedChinese = "简体"; //同上，但两处均不建议更改
+  var translateButtonId = "translateLink"; //默认互换id
+  translateInitilization();
+</script>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"> 本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"licao404"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("eU0wbE0RUcORq7vQxOaLmU26-gzGzoHsz", "Gtpg553mTGDAVFS7WKsPbSA3");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  
+
+
+</body>
+</html>

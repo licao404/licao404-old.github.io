@@ -1,0 +1,1210 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="XbkMTn0NEANG-vDVITHx2Gnz8X7Yj0lvkXmj6291KDY" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CSS," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="蓝岚爱肉肉" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="【知识点】
+1. 如何调试 IE 浏览器?
+1.通过高版本IE浏览器的开发者工具，可以仿真其之前版本IE浏览器的运行环境，基本上可以临时快速调试各版本IE浏览器：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS浏览器兼容">
+<meta property="og:url" content="http://licao404.com/2016/03/01/CSS浏览器兼容/index.html">
+<meta property="og:site_name" content="蓝岚爱肉肉">
+<meta property="og:description" content="【知识点】
+1. 如何调试 IE 浏览器?
+1.通过高版本IE浏览器的开发者工具，可以仿真其之前版本IE浏览器的运行环境，基本上可以临时快速调试各版本IE浏览器：">
+<meta property="og:image" content="http://7xr868.com1.z0.glb.clouddn.com/task13IE%E5%BC%80%E5%8F%91%E8%80%85.png">
+<meta property="og:image" content="http://7xr868.com1.z0.glb.clouddn.com/task13Win_XP.png">
+<meta property="og:image" content="http://7xr868.com1.z0.glb.clouddn.com/task13ie8%E6%A0%87%E5%87%86%E5%92%8C%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="http://7xr868.com1.z0.glb.clouddn.com/task13inline-block-ie8.png">
+<meta property="og:image" content="http://7xr868.com1.z0.glb.clouddn.com/task13inline-block-ie7.png">
+<meta property="og:image" content="http://7xr868.com1.z0.glb.clouddn.com/task13ie6.png">
+<meta property="og:updated_time" content="2016-07-12T14:52:43.520Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS浏览器兼容">
+<meta name="twitter:description" content="【知识点】
+1. 如何调试 IE 浏览器?
+1.通过高版本IE浏览器的开发者工具，可以仿真其之前版本IE浏览器的运行环境，基本上可以临时快速调试各版本IE浏览器：">
+<meta name="twitter:image" content="http://7xr868.com1.z0.glb.clouddn.com/task13IE%E5%BC%80%E5%8F%91%E8%80%85.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6261706695056033000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://licao404.com/2016/03/01/CSS浏览器兼容/"/>
+
+  <title> CSS浏览器兼容 | 蓝岚爱肉肉 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?50dccebe8271dcccd782178e2cdbbc52";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s95.cnzz.com/z_stat.php?id=1258087445&web_id=1258087445" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">蓝岚爱肉肉</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Gardon Lee's Blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-file-text"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+        <li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()    '>[High起来]</a> </li>
+
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '7PcwcK-5yqhMrUDyc-y-','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CSS浏览器兼容
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-01T13:39:11+08:00" content="2016-03-01">
+              2016-03-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/编程学习/" itemprop="url" rel="index">
+                    <span itemprop="name">编程学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/编程学习/前端基础/" itemprop="url" rel="index">
+                    <span itemprop="name">前端基础</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/01/CSS浏览器兼容/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/01/CSS浏览器兼容/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/03/01/CSS浏览器兼容/" class="leancloud_visitors" data-flag-title="CSS浏览器兼容">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<h3 id="【知识点】"><a href="#【知识点】" class="headerlink" title="【知识点】"></a>【知识点】</h3></blockquote>
+<h4 id="1-如何调试-IE-浏览器"><a href="#1-如何调试-IE-浏览器" class="headerlink" title="1. 如何调试 IE 浏览器?"></a><strong>1. 如何调试 IE 浏览器?</strong></h4><blockquote>
+<p>1.通过高版本IE浏览器的开发者工具，可以仿真其之前版本IE浏览器的运行环境，基本上可以临时快速调试各版本IE浏览器：<img src="http://7xr868.com1.z0.glb.clouddn.com/task13IE%E5%BC%80%E5%8F%91%E8%80%85.png" alt="IE调试01"><br><a id="more"></a><br>2.用虚拟机运行xp等系统，用原生ie6浏览器调试；<br>3.如果有条件，远程到一台有相应版本浏览器的机器（服务器）上，进行调试；<br>4.使用第三方调试工具（<code>IETester</code>等）模拟各种版本浏览器，不过存在一些未知的问题，毕竟是模拟的；</p>
+</blockquote>
+<h4 id="2-什么是CSS-hack？在-CSS-和-HTML里如何写-hack？在-CSS-中-ie6、ie7的-hack-方式？"><a href="#2-什么是CSS-hack？在-CSS-和-HTML里如何写-hack？在-CSS-中-ie6、ie7的-hack-方式？" class="headerlink" title="2. 什么是CSS hack？在 CSS 和 HTML里如何写 hack？在 CSS 中 ie6、ie7的 hack 方式？"></a><strong>2. 什么是<code>CSS hack</code>？在 CSS 和 HTML里如何写 <code>hack</code>？在 CSS 中 ie6、ie7的 <code>hack</code> 方式？</strong></h4><blockquote>
+<p>由于不同浏览器和某浏览器的不同版本，特别是一些老浏览器，如IE6,7等，对CSS的支持、解析不一致，因此会导致页面的显示效果不一样，而<code>CSS hack</code>是利用浏览器漏洞来让不同浏览器显示效果一致，我们把针对不同的浏览器/不同版本写相应的<code>CSS code</code>的过程，叫做<code>CSS hack</code>；</p>
+</blockquote>
+<ul>
+<li><p><code>CSS hack</code>基本上有4种方式：</p>
+<ul>
+<li>IE条件注释法（IE专有的hack方式，Microsoft官方推荐）</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">只在IE下生效</span><br><span class="line"><span class="comment">&lt;!--[if IE]&gt;</span><br><span class="line">  &lt;link rel="stylesheet" type="text/css" href="ie.css"&gt;</span><br><span class="line">&lt;![endif]--&gt;</span></span><br><span class="line"></span><br><span class="line">只在IE6下生效</span><br><span class="line"><span class="comment">&lt;!--[if IE6]&gt;</span><br><span class="line">  &lt;link rel="stylesheet" type="text/css" href="ie6.css"&gt;</span><br><span class="line">&lt;![endif]--&gt;</span></span><br><span class="line"></span><br><span class="line">只在IE6以上版本生效</span><br><span class="line"><span class="comment">&lt;!--[if gte IE]&gt;</span><br><span class="line">  &lt;link rel="stylesheet" type="text/css" href="ie.css"&gt;</span><br><span class="line">&lt;![endif]--&gt;</span></span><br><span class="line"></span><br><span class="line">非IE浏览器生效</span><br><span class="line"><span class="comment">&lt;!--[if ！IE]&gt;</span><br><span class="line">  &lt;link rel="stylesheet" type="text/css" href="ie.css"&gt;</span><br><span class="line">&lt;![endif]--&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>属性前缀法：</p>
+<ol>
+<li><code>_</code>和<code>-</code>只对<code>ie6</code>有效；</li>
+<li><code>*</code>对<code>ie6,7</code>有效；</li>
+<li><code>\9</code>对<code>ie11</code>以下所有ie有效；</li>
+<li><code>\0</code>对<code>ie8,9,10</code>有效；</li>
+<li><code>\9\0</code>只对<code>ie9,10</code>有效；</li>
+<li><code>\0\9</code>只对<code>ie8,9</code>有效；</li>
+<li>… …</li>
+</ol>
+</li>
+<li><p>选择器前缀法：</p>
+<ol>
+<li><code>* 前缀</code>只对IE6有效；</li>
+<li><code>*+ 前缀</code>只对IE7有效；</li>
+<li>更多可以参考<a href="http://browserhacks.com/" target="_blank" rel="external">browserhacks</a>；</li>
+</ol>
+</li>
+<li><p>用<code>JavaScript</code>判断<code>ie</code>版本：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 是否小于等于ie8</span></span><br><span class="line">    <span class="keyword">var</span> isIE = <span class="string">'\v'</span>==<span class="string">'v'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断ie版本</span></span><br><span class="line">    <span class="keyword">var</span> ieVersion = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">if</span> (<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"MSIE     ([0-9]&#123;1,&#125;[\.0-9]&#123;0,&#125;)"</span>).exec(navigator.userAgent) != <span class="literal">null</span>) &#123; <span class="keyword">return</span> <span class="built_in">parseFloat</span>( <span class="built_in">RegExp</span>.$<span class="number">1</span> ); &#125; <span class="keyword">else</span> &#123; <span class="keyword">return</span> <span class="literal">false</span>; &#125; &#125;)();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="3-列举几种-浏览器兼容问题"><a href="#3-列举几种-浏览器兼容问题" class="headerlink" title="3. 列举几种 浏览器兼容问题"></a><strong>3. 列举几种 浏览器兼容问题</strong></h4><blockquote>
+<p>1.不同浏览器对标签默认的内外边距不一致，最常见的兼容性问题，解决方式：在<code>css</code>开头用通配选择器将所有元素重置<code>*{margin:0;padding:0;}</code>;<br>2.块属性标签float后，又有横行的margin情况下，在IE6显示margin比设置的大,常见的问题体现是ie6中最后一块被顶到下面一行，解决方法：在float的标签样式控制中加入 display:inline;将其转化为行内属性；<br>3.图片默认有间距，几个img标签放在一起的时候，有些浏览器会有默认的间距，加了问题一中提到的通配符也不起作用；解决方法：用<code>float</code>为图片布局；<br>4…. …更多兼容性问题参考<a href="http://blog.csdn.net/chuyuqing/article/details/37561313" target="_blank" rel="external">chuyuqing的专栏</a>，<a href="http://wenku.baidu.com/link?url=ysYAKTQTyuudp9fU8sLvVr-VlGdJvCrHFWRpN8RcJSo0hxw-XnBJ_zhiHVudTy7Mq3AQSM6TEmCMDFaS4CNrS2NXGkokWmvU9gKGFaqxVYe" target="_blank" rel="external">文库</a></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="4-针对兼容、多浏览器覆盖有什么看法？渐进增强和优雅降级是什么意思？"><a href="#4-针对兼容、多浏览器覆盖有什么看法？渐进增强和优雅降级是什么意思？" class="headerlink" title="4. 针对兼容、多浏览器覆盖有什么看法？渐进增强和优雅降级是什么意思？"></a><strong>4. 针对兼容、多浏览器覆盖有什么看法？渐进增强和优雅降级是什么意思？</strong></h4><blockquote>
+<p>1.首先考虑产品的受众，设计师，是否需要兼容老版本的浏览器，比如说该产品用户大多不用IE浏览器，则不需要考虑兼容ie的老版本；<br>2.看你的<code>leader</code>或者审阅产品的人在用什么浏览器,考虑兼容；<br>3.做到几乎全部的兼容覆盖并不现实，必须结合现有资源，用户实际需求，项目时间的综合考虑是否要做或做什么浏览器的兼容；<br>4.渐进增强：项目一开始就考虑低版本浏览器的兼容性，保证最基本的功能，再对高级浏览器进行效果改进。<br>5.优雅降级：一开始就构建完整的功能，完成后再进行低版本浏览器兼容；</p>
+</blockquote>
+<h4 id="5-reset-css和normalize-css分别是做什么的？为什么推荐使用-nomalize-css"><a href="#5-reset-css和normalize-css分别是做什么的？为什么推荐使用-nomalize-css" class="headerlink" title="5. reset.css和normalize.css分别是做什么的？为什么推荐使用 nomalize.css?"></a><strong>5. <code>reset.css</code>和<code>normalize.css</code>分别是做什么的？为什么推荐使用 nomalize.css?</strong></h4><blockquote>
+<p>1.<code>reset.css</code>是全局样式重置，html标签在不同浏览器的默认样式存在差异，<code>reset.css</code>一开始就将浏览器的默认样式全部暴力覆盖掉；<br>2.<code>normalize.css</code>保留浏览器的原来样式并且做到每个浏览显示一致；<br>3.<code>Normalize</code>相对<code>平和</code>，注重通用的方案，重置掉该重置的样式，保留有用的<code>user agent</code>样式，同时进行一些 bug 的修复，这点是 reset 所缺乏的,所以通用性和可维护性高；</p>
+</blockquote>
+<hr>
+<blockquote>
+<h3 id="【操作】"><a href="#【操作】" class="headerlink" title="【操作】"></a>【操作】</h3></blockquote>
+<h4 id="1-安装-VirtualBox-下载-安装虚拟机"><a href="#1-安装-VirtualBox-下载-安装虚拟机" class="headerlink" title="1.安装 VirtualBox , 下载 安装虚拟机"></a>1.安装 VirtualBox , 下载 安装虚拟机</h4><p><img src="http://7xr868.com1.z0.glb.clouddn.com/task13Win_XP.png" alt="虚拟机"></p>
+<blockquote>
+<h4 id="2-在-ie-6-7-8中展示-盒模型、inline-block、max-width的区别"><a href="#2-在-ie-6-7-8中展示-盒模型、inline-block、max-width的区别" class="headerlink" title="2.在 ie 6, 7, 8中展示 盒模型、inline-block、max-width的区别"></a>2.在 ie 6, 7, 8中展示 <code>盒模型</code>、<code>inline-block</code>、<code>max-width</code>的区别</h4></blockquote>
+<ul>
+<li>测试代码：<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css"></span><br><span class="line">  *&#123;</span><br><span class="line">  	<span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">  	<span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">    <span class="selector-class">.box</span>&#123;</span><br><span class="line">      <span class="attribute">display</span>: inline-block;</span><br><span class="line">      <span class="attribute">height</span>:<span class="number">100px</span>;</span><br><span class="line">      <span class="attribute">width</span>:<span class="number">100px</span>;</span><br><span class="line">      <span class="attribute">border</span>:<span class="number">20px</span> solid red;</span><br><span class="line">      <span class="attribute">padding</span>:<span class="number">30px</span>;</span><br><span class="line">      <span class="attribute">margin</span>: <span class="number">40px</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="selector-class">.box2</span>&#123;</span><br><span class="line">      <span class="attribute">display</span>: inline-block;</span><br><span class="line">      <span class="attribute">height</span>:<span class="number">100px</span>;</span><br><span class="line">      <span class="attribute">width</span>:<span class="number">100px</span>;</span><br><span class="line">      <span class="attribute">max-width</span>: <span class="number">50px</span>;</span><br><span class="line">      <span class="attribute">border</span>:<span class="number">20px</span> solid blue;</span><br><span class="line">      <span class="attribute">padding</span>:<span class="number">30px</span>;</span><br><span class="line">      <span class="attribute">margin</span>: <span class="number">40px</span>;</span><br><span class="line">      &#125;</span><br><span class="line">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--****************************************************--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box2"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>1.在标准模式下的盒模型如下图所示，<code>盒子总宽度/高度=width/height+padding+border+margin</code>;<img src="http://7xr868.com1.z0.glb.clouddn.com/task13ie8%E6%A0%87%E5%87%86%E5%92%8C%E6%A8%A1%E5%9E%8B.png" alt="标准盒子模型"><br>在<code>ie6,7</code>怪异模式下,<code>盒子总宽度/高度=width/height + margin = 内容区宽度/高度 + padding + border + margin</code>;<br>2.<code>inline-block</code>只有ie8支持，<code>max-width</code>ie7,8支持（存在bug具体看<a href="http://caniuse.com/#search=max-width" target="_blank" rel="external">caniuse</a>）：</p>
+<hr>
+<p>IE8</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="http://7xr868.com1.z0.glb.clouddn.com/task13inline-block-ie8.png" alt="ie8"></h2><p>IE7</p>
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="http://7xr868.com1.z0.glb.clouddn.com/task13inline-block-ie7.png" alt="ie7"></h2><p>IE6<br><img src="http://7xr868.com1.z0.glb.clouddn.com/task13ie6.png" alt="ie6"></p>
+<hr>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E5%8D%9A%E5%AE%A2%E5%BE%AE%E4%BF%A1%E8%AE%A2%E9%98%85%E5%8F%B7.jpg" alt="蓝岚 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果您喜欢，请随意打赏。您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E5%BE%AE%E4%BF%A1%E6%89%93%E8%B5%8F%E9%9A%8F%E6%84%8F.png" alt="蓝岚 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%89%93%E8%B5%8F%E9%9A%8F%E6%84%8F.jpg" alt="蓝岚 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/29/圣杯布局-双飞翼布局/" rel="next" title="圣杯布局+双飞翼布局">
+                <i class="fa fa-chevron-left"></i> 圣杯布局+双飞翼布局
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/16/JavaScript基本语法/" rel="prev" title="JavaScript基本语法要点">
+                JavaScript基本语法要点 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ffc85abe3ee8ee" async = "async" ></script>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/03/01/CSS浏览器兼容/"
+           data-title="CSS浏览器兼容" data-url="http://licao404.com/2016/03/01/CSS浏览器兼容/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xr868.com1.z0.glb.clouddn.com/me.jpg"
+               alt="蓝岚" />
+          <p class="site-author-name" itemprop="name">蓝岚</p>
+          <p class="site-description motion-element" itemprop="description">一生想做浪漫极客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="Mailto:15720600373@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope-o"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2806327437/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://coolshell.cn/" title="酷壳" target="_blank">酷壳</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#【知识点】"><span class="nav-number">1.</span> <span class="nav-text">【知识点】</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-如何调试-IE-浏览器"><span class="nav-number">1.1.</span> <span class="nav-text">1. 如何调试 IE 浏览器?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-什么是CSS-hack？在-CSS-和-HTML里如何写-hack？在-CSS-中-ie6、ie7的-hack-方式？"><span class="nav-number">1.2.</span> <span class="nav-text">2. 什么是CSS hack？在 CSS 和 HTML里如何写 hack？在 CSS 中 ie6、ie7的 hack 方式？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-列举几种-浏览器兼容问题"><span class="nav-number">1.3.</span> <span class="nav-text">3. 列举几种 浏览器兼容问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-针对兼容、多浏览器覆盖有什么看法？渐进增强和优雅降级是什么意思？"><span class="nav-number">1.4.</span> <span class="nav-text">4. 针对兼容、多浏览器覆盖有什么看法？渐进增强和优雅降级是什么意思？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-reset-css和normalize-css分别是做什么的？为什么推荐使用-nomalize-css"><span class="nav-number">1.5.</span> <span class="nav-text">5. reset.css和normalize.css分别是做什么的？为什么推荐使用 nomalize.css?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#【操作】"><span class="nav-number">2.</span> <span class="nav-text">【操作】</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-安装-VirtualBox-下载-安装虚拟机"><span class="nav-number">2.1.</span> <span class="nav-text">1.安装 VirtualBox , 下载 安装虚拟机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-在-ie-6-7-8中展示-盒模型、inline-block、max-width的区别"><span class="nav-number">2.2.</span> <span class="nav-text">2.在 ie 6, 7, 8中展示 盒模型、inline-block、max-width的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number"></span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-1"><span class="nav-number"></span> <span class="nav-text"></span></a></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script> -->
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-cogs"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">蓝岚</span>
+  <!-- <span id="busuanzi_container_site_pv" style='display: none'>
+    &nbsp; | &nbsp;您是本站第<span id="busuanzi_value_site_pv"></span>位小伙伴
+</span> -->
+</div>
+
+<div class="powered-by">
+  Power by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+  &nbsp;&nbsp; | &nbsp;&nbsp;<a id="translateLink" href="javascript:translatePage();">繁體</a>
+</div>
+
+<script type="text/javascript" src="http://7xrvo9.com1.z0.glb.clouddn.com/tw_cn.js"></script>
+<script type="text/javascript">
+  var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+  var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+  var cookieDomain = "http://www.licao404.com/"; //Cookie地址, 一定要设定, 通常为你的网址
+  var msgToTraditionalChinese = "繁體"; //此处可以更改为你想要显示的文字
+  var msgToSimplifiedChinese = "简体"; //同上，但两处均不建议更改
+  var translateButtonId = "translateLink"; //默认互换id
+  translateInitilization();
+</script>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"> 本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"licao404"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("eU0wbE0RUcORq7vQxOaLmU26-gzGzoHsz", "Gtpg553mTGDAVFS7WKsPbSA3");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  
+
+
+</body>
+</html>

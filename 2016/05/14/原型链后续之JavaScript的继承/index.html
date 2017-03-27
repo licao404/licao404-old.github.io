@@ -1,0 +1,1224 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="XbkMTn0NEANG-vDVITHx2Gnz8X7Yj0lvkXmj6291KDY" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="蓝岚爱肉肉" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="还记得这张原型图么（没见过 or 忘了的请戳《OOP For JavaScript》和《说清楚JavaScript的原型链》这两篇博文）？深入学习了JavaScript原型和原型链的的概念和原理后，我们内心会隐隐有种道不明的感觉，如果你学习过其他面向对象语言，你会不自觉发现这是种多么熟悉的感觉啊——这不就像是继承么？此文就将内心的感觉整理出来，作为JavaScript语言的一个核心概念来学习。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原型链后续之JavaScript的继承">
+<meta property="og:url" content="http://licao404.com/2016/05/14/原型链后续之JavaScript的继承/index.html">
+<meta property="og:site_name" content="蓝岚爱肉肉">
+<meta property="og:description" content="还记得这张原型图么（没见过 or 忘了的请戳《OOP For JavaScript》和《说清楚JavaScript的原型链》这两篇博文）？深入学习了JavaScript原型和原型链的的概念和原理后，我们内心会隐隐有种道不明的感觉，如果你学习过其他面向对象语言，你会不自觉发现这是种多么熟悉的感觉啊——这不就像是继承么？此文就将内心的感觉整理出来，作为JavaScript语言的一个核心概念来学习。">
+<meta property="og:image" content="http://7xr868.com1.z0.glb.clouddn.com/task36/Person%E5%8E%9F%E5%9E%8B%E5%9B%BE.png">
+<meta property="og:image" content="http://7xr868.com1.z0.glb.clouddn.com/task37/%E5%8E%9F%E5%9E%8B%E5%9B%BEcreate.png">
+<meta property="og:updated_time" content="2016-07-12T13:42:30.478Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="原型链后续之JavaScript的继承">
+<meta name="twitter:description" content="还记得这张原型图么（没见过 or 忘了的请戳《OOP For JavaScript》和《说清楚JavaScript的原型链》这两篇博文）？深入学习了JavaScript原型和原型链的的概念和原理后，我们内心会隐隐有种道不明的感觉，如果你学习过其他面向对象语言，你会不自觉发现这是种多么熟悉的感觉啊——这不就像是继承么？此文就将内心的感觉整理出来，作为JavaScript语言的一个核心概念来学习。">
+<meta name="twitter:image" content="http://7xr868.com1.z0.glb.clouddn.com/task36/Person%E5%8E%9F%E5%9E%8B%E5%9B%BE.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6261706695056033000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://licao404.com/2016/05/14/原型链后续之JavaScript的继承/"/>
+
+  <title> 原型链后续之JavaScript的继承 | 蓝岚爱肉肉 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?50dccebe8271dcccd782178e2cdbbc52";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="http://s95.cnzz.com/z_stat.php?id=1258087445&web_id=1258087445" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">蓝岚爱肉肉</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Gardon Lee's Blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-file-text"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+        <li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()    '>[High起来]</a> </li>
+
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '7PcwcK-5yqhMrUDyc-y-','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                原型链后续之JavaScript的继承
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-14T12:15:51+08:00" content="2016-05-14">
+              2016-05-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/编程学习/" itemprop="url" rel="index">
+                    <span itemprop="name">编程学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/编程学习/前端基础/" itemprop="url" rel="index">
+                    <span itemprop="name">前端基础</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/14/原型链后续之JavaScript的继承/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/14/原型链后续之JavaScript的继承/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/05/14/原型链后续之JavaScript的继承/" class="leancloud_visitors" data-flag-title="原型链后续之JavaScript的继承">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://7xr868.com1.z0.glb.clouddn.com/task36/Person%E5%8E%9F%E5%9E%8B%E5%9B%BE.png" alt=""></p>
+<blockquote class="blockquote-center">还记得这张原型图么（没见过 or 忘了的请戳<a href="./2016/05/10/OOP-For-JavaScript/">《OOP For JavaScript》</a>和<a href="./2016/05/12/原型链/">《说清楚JavaScript的原型链》</a>这两篇博文）？深入学习了JavaScript原型和原型链的的概念和原理后，我们内心会隐隐有种道不明的感觉，如果你学习过其他面向对象语言，你会不自觉发现这是种多么熟悉的感觉啊——这不就像是继承么？此文就将内心的感觉整理出来，作为JavaScript语言的一个核心概念来学习。</blockquote>
+
+<a id="more"></a>
+<blockquote>
+<h3 id="【理论知识】"><a href="#【理论知识】" class="headerlink" title="【理论知识】"></a>【理论知识】</h3></blockquote>
+<h4 id="继承有什么作用"><a href="#继承有什么作用" class="headerlink" title="继承有什么作用? "></a><strong>继承有什么作用? </strong></h4><ul>
+<li>继承是面向对象语言中一个重要的概念，通过继承实现代码复用，拓展软件功能；</li>
+<li>不像其他面向对象语言的继承有着诸如“父类”和“子类”的概念，父类的的属性和方法子类可以继承而不必重写，只需要写出新增或者改写的内容。JavaScript是基于对象的语言，没有类的概念，所以，要想实现继承，就需要用js的原型链或者用 <code>apply</code> 和 <code>call</code> 方法。</li>
+</ul>
+<h4 id="有几种常见创建对象的方式-举例说明"><a href="#有几种常见创建对象的方式-举例说明" class="headerlink" title="有几种常见创建对象的方式? 举例说明?"></a><strong>有几种常见创建对象的方式? 举例说明?</strong></h4><ul>
+<li><p>工厂模式 ，由于JavaScript中无法创建类，所以通过一个函数来封装以特定接口创建对象的细节，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">creatHuman</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> o = &#123;</span><br><span class="line">        name: name,</span><br><span class="line">        age: age,</span><br><span class="line">        selfIntro: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"I'm "</span> + name);</span><br><span class="line">        &#125;   </span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> people1 = creatHuman(<span class="string">"Gardon"</span>,<span class="number">20</span>);</span><br><span class="line"><span class="keyword">var</span> people2 = creatHuman(<span class="string">"John"</span>,<span class="number">18</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>构造函数模式 ，自定义对象类型的属性和方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Human</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name,</span><br><span class="line">        <span class="keyword">this</span>.age = age,</span><br><span class="line">        <span class="keyword">this</span>.selfIntro = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"I'm "</span> + name);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> people1 = <span class="keyword">new</span> Human(<span class="string">"Gardon"</span>,<span class="number">20</span>);</span><br><span class="line"><span class="keyword">var</span> people2 = <span class="keyword">new</span> Human(<span class="string">"John"</span>,<span class="number">18</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>原型模式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Human</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">Human.prototype.name = <span class="string">"Gardon"</span>,</span><br><span class="line">Human.prototype.age = <span class="number">20</span>,</span><br><span class="line">Human.prototype.selfIntro = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"I'm "</span> + <span class="keyword">this</span>.name);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> people1 = <span class="keyword">new</span> Human();</span><br><span class="line"><span class="keyword">var</span> people2 = <span class="keyword">new</span> Human();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>构造函数模式与原型模式结合 ， 目前JavaScript中使用最广泛，认同度最高的一种创建自定义类型的方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Human</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name,</span><br><span class="line">        <span class="keyword">this</span>.age = age</span><br><span class="line">&#125;</span><br><span class="line">Human.prototype.selfIntro = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"I'm "</span> + <span class="keyword">this</span>.name);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> people1 = <span class="keyword">new</span> Human(<span class="string">"Gardon"</span>,<span class="number">20</span>);</span><br><span class="line"><span class="keyword">var</span> people2 = <span class="keyword">new</span> Human(<span class="string">"John"</span>,<span class="number">18</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>……</p>
+</li>
+</ul>
+<h4 id="下面两种写法有什么区别"><a href="#下面两种写法有什么区别" class="headerlink" title="下面两种写法有什么区别?"></a><strong>下面两种写法有什么区别?</strong></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方法1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">People</span>(<span class="params">name, sex</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.sex = sex;</span><br><span class="line">    <span class="keyword">this</span>.printName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> People(<span class="string">'Gardon'</span>, <span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//方法2</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, sex</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.sex = sex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person.prototype.printName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> Person(<span class="string">'John'</span>, <span class="number">18</span>);</span><br></pre></td></tr></table></figure>
+<p>经过前面的总结，可知：上面的代码采用两种不同的创建对象的模式。</p>
+<ul>
+<li><p>方法1 用的是构造函数模式，每次通过 <code>new</code> 创建 <code>People</code> 的新实例，会为每个新实例绑定属性和方法，也就是每个 <code>People</code> 的实例都被添加了 <code>printName</code> 方法；</p>
+</li>
+<li><p>方法2 构造函数模式与原型模式结合，实例的属性都是在构造函数中定义的，而由所有实例共享的属性和方法则是在原型中定义的，也就是所有 <code>Person</code> 的实例都继承了 <code>Person</code> 原型对象的 <code>printName</code> 方法，由原型链指向也可发现这种区别。</p>
+</li>
+</ul>
+<h4 id="Object-create-有什么作用？兼容性如何？如何使用？"><a href="#Object-create-有什么作用？兼容性如何？如何使用？" class="headerlink" title="Object.create 有什么作用？兼容性如何？如何使用？"></a><strong>Object.create 有什么作用？兼容性如何？如何使用？</strong></h4><p>ECMAScript5 通过新增 <code>Object.create()</code> 方法创建一个拥有指定原型和若干个指定属性的对象，规范化了原型式继承；<br>这个方法接受两个参数，第一个是用作新对象原型的对象、第二个是一个为新对象定义额外属性的对象，是个可选值；</p>
+<blockquote>
+<p>好吧，这样解释确实有点晦涩，继续来个 <code>Human</code> 的栗子加个原型图说明下：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这里首先新建了个构造函数Human（对象）</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Human</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">&#125;</span><br><span class="line">Human.prototype.selfIntro = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"I'm "</span> + <span class="keyword">this</span>.name);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//这里又新建了个构造函数GreatMan（对象）</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">GreatMan</span>(<span class="params">trait</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.trait = trait;</span><br><span class="line">    Human.call(<span class="keyword">this</span>);<span class="comment">//重新定义Human函数的运行上下文为当前GreatMan的上下文</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在需要 <code>GreatMan</code> 继承自 <code>Human</code> 。除了原型链继承，我们使用一种原型式的继承：将 <code>Human</code> 的原型拷贝一份，这用到了 <code>Object.create()</code> 方法，然后让新对象（也就是 <code>GreatMan</code>） 的 <code>prototype</code> 指向拷贝来的原型：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GreatMan.prototype = <span class="built_in">Object</span>.create(Human.prototype);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> turing = <span class="keyword">new</span> GreatMan(<span class="string">"diligent"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(turing.selfIntro());<span class="comment">//I'm undefined</span></span><br><span class="line"></span><br><span class="line">turing.name = <span class="string">"Turing"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(turing.selfIntro());<span class="comment">//I'm Turing</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>原型图示：</p>
+</blockquote>
+<p><img src="http://7xr868.com1.z0.glb.clouddn.com/task37/%E5%8E%9F%E5%9E%8B%E5%9B%BEcreate.png" alt=""></p>
+<blockquote>
+<p>考虑兼容性：支持 Object.create() 方法的浏览器有 <code>IE9+</code>、<code>Firefix4+</code>、<code>Safari5+</code>、<code>Opera12+</code> 和 <code>Chrome</code>  </p>
+</blockquote>
+<h4 id="hasOwnProperty-有什么作用？-如何使用？"><a href="#hasOwnProperty-有什么作用？-如何使用？" class="headerlink" title="hasOwnProperty 有什么作用？ 如何使用？"></a><strong>hasOwnProperty 有什么作用？ 如何使用？</strong></h4><p><code>hasOwnProperty()</code> 方法用来判断某个对象是否含有指定的自身属性，参数是要检测的是属性名。<br>所有继承了 <code>Object.prototype</code> 的对象都会从原型链上继承到 <code>hasOwnProperty</code> 方法，这个方法可以用来检测一个对象是否含有特定的自身属性，如对上面的例子:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Human</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">    <span class="keyword">this</span>.selfAge = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"I'm "</span> + <span class="keyword">this</span>.age);    </span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line">Human.prototype.selfIntro = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;    </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"I'm "</span> + <span class="keyword">this</span>.name);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> people1 = <span class="keyword">new</span> Human(<span class="string">"Gardon"</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">people1.hasOwnProperty(<span class="string">'name'</span>);<span class="comment">//true</span></span><br><span class="line">people1.hasOwnProperty(<span class="string">'age'</span>);<span class="comment">//true</span></span><br><span class="line">people1.hasOwnProperty(<span class="string">'selfAge'</span>);<span class="comment">//true</span></span><br><span class="line">people1.hasOwnProperty(<span class="string">'selfIntro'</span>)<span class="comment">//false</span></span><br></pre></td></tr></table></figure></p>
+<p>我们创建 Human 的实例 <code>people1</code>，people1 的属性包含 name、ag、selfAge，所以 <code>hasOwnProperty</code> 返回的是 <code>true</code>,而 <code>selfIntro</code> 是其指向的原型的属性，所以 <code>hasOwnProperty</code> 返回 <code>false</code>。</p>
+<h4 id="实现-Object-create-的-polyfill，如：（ps-写个-函数create，实现-Object-create-的功能）"><a href="#实现-Object-create-的-polyfill，如：（ps-写个-函数create，实现-Object-create-的功能）" class="headerlink" title="实现 Object.create 的 polyfill，如：（ps: 写个 函数create，实现 Object.create 的功能）"></a><strong>实现 Object.create 的 polyfill，如：（ps: 写个 函数create，实现 Object.create 的功能）</strong></h4><blockquote>
+<p><a href="http://www.cnblogs.com/ziyunfei/archive/2012/09/17/2688829.html" target="_blank" rel="external">什么是 polyfill？</a></p>
+</blockquote>
+<p><code>Object.create</code> 的内部实现逻辑前面的解释和原型图已经很明了，现在通过自定义函数实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//create传入的参数是需要继承的对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>)</span>&#123;&#125;<span class="comment">//基于传入对象创建一个临时的构造函数</span></span><br><span class="line">    F.prototype = obj;<span class="comment">//将传入的对象作为构造函数的原型</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> F();<span class="comment">//返回构造函数的一个新实例</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj = &#123;a: <span class="number">1</span>, b:<span class="number">2</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> obj2 = create(obj);</span><br><span class="line"><span class="built_in">console</span>.log(obj2.a); <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+<p>区区3行,这是 ECMAScript 另外一种继承的思路：原型式继承。最初由 <a href="http://www.crockford.com/" target="_blank" rel="external">Douglas Crockford</a> 在其文章 <a href="http://javascript.crockford.com/prototypal.html" target="_blank" rel="external">《Prototypal Inheritance in JavaScript》</a> 中提出。</p>
+<p>ECMAScript5 通过新增 <code>Object.create()</code> 方法创建一个拥有指定原型和若干个指定属性的对象，规范化了原型式继承，<code>Object.create()</code> 在传入一个参数的情况下，和 <code>create()</code> 方法的行为相同。</p>
+<h4 id="如下代码中-call-的作用是什么"><a href="#如下代码中-call-的作用是什么" class="headerlink" title="如下代码中 call 的作用是什么?"></a><strong>如下代码中 call 的作用是什么?</strong></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, sex</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.sex = sex;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Male</span>(<span class="params">name, sex, age</span>)</span>&#123;</span><br><span class="line">    Person.call(<span class="keyword">this</span>, name, sex);    <span class="comment">//这里的 call 有什么作用</span></span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>前面谈论 <code>this</code> 时（参见<a href="./2016/05/04/关于-this-二三事/#more">《关于 “this” 二三事》</a>）已经简单提过 <code>call</code> 和 <code>apply</code> 函数的一般作用：用来动态改变某个函数运行时上下文（重新定义函数的执行环境），也就是函数内部 <code>this</code> 的指向。</p>
+<p><code>call</code> 和 <code>apply</code> 也正是通过这种作用来实现继承，上面代码中，<code>call</code> 将 <code>Person</code> 这个构造函数的运行时上下文变为 <code>Male</code> 这个构造函数（<code>Person</code> 内部的 <code>this</code> 指向 <code>Male</code>）;</p>
+<p>这时候通过 <code>new</code> 新建 <code>Male</code> 的实例对象：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> goodman = <span class="keyword">new</span> Male(<span class="string">"Gardon"</span>,<span class="string">"male"</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(goodman.age);<span class="comment">//20</span></span><br><span class="line"><span class="built_in">console</span>.log(goodman.name);<span class="comment">//Gardon</span></span><br><span class="line"><span class="built_in">console</span>.log(goodman.sex);<span class="comment">//male</span></span><br></pre></td></tr></table></figure></p>
+<p>发现 <code>goodman</code> 是不是就有了 <code>name</code> 和 <code>sex</code> 属性呢？然而 <code>Male</code> 中并没有这两个属性，而是通过 <code>call</code> 函数继承了 <code>Person</code> 的属性。</p>
+<blockquote>
+<p>apply 函数与 call 函数作用相同，参数传入方式略有区别，同样参见之前的博文<a href="./2016/05/04/关于-this-二三事/#more">《关于 “this” 二三事》</a><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person.apply(<span class="keyword">this</span>,[name, sex]);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h4 id="补全代码，实现继承"><a href="#补全代码，实现继承" class="headerlink" title="补全代码，实现继承"></a><strong>补全代码，实现继承</strong></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, sex</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.sex = sex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person.prototype.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">&#125;;    </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Male</span>(<span class="params">name, sex, age</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.age = age;  </span><br><span class="line">   Person.call(<span class="keyword">this</span>,name,sex)<span class="comment">//call方法继承属性</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Male.prototype = <span class="built_in">Object</span>.create(Person.prototype);<span class="comment">//Object.create继承原型方法</span></span><br><span class="line"></span><br><span class="line">Male.prototype.printName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.getName())</span><br><span class="line">&#125;;</span><br><span class="line">Male.prototype.getAge = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = <span class="keyword">new</span> Male(<span class="string">'Gardon'</span>, <span class="string">'male'</span>, <span class="number">20</span>);</span><br><span class="line">john.printName();<span class="comment">//Gardon</span></span><br></pre></td></tr></table></figure>
+<hr>
+<blockquote>
+<h3 id="【小试牛刀】"><a href="#【小试牛刀】" class="headerlink" title="【小试牛刀】"></a>【小试牛刀】</h3></blockquote>
+<h4 id="实现如下可拖拽-dialog-弹窗功能，如下是功能要求"><a href="#实现如下可拖拽-dialog-弹窗功能，如下是功能要求" class="headerlink" title="实现如下可拖拽 dialog 弹窗功能，如下是功能要求"></a><strong>实现如下可拖拽 dialog 弹窗功能，如下是功能要求</strong></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//功能描述：</span></span><br><span class="line"><span class="comment">// 1. 可使用 dialog.open() 去打开弹窗</span></span><br><span class="line"><span class="comment">// 2. 当点击确定、取消时可使用用户自定义事件</span></span><br><span class="line"><span class="comment">// 3. dialog 可拖动</span></span><br><span class="line"><span class="comment">// 4. 允许页面展示多个 dialog</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dialog</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="comment">//todo ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> tpl = <span class="string">'&lt;ul&gt;&lt;li&gt;列表1&lt;/li&gt;&lt;li&gt;列表2&lt;/li&gt;&lt;li&gt;列表1&lt;/li&gt;&lt;li&gt;列表1&lt;/li&gt;&lt;/ul&gt;'</span>;</span><br><span class="line"></span><br><span class="line">$(<span class="string">'#open4'</span>).on(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> dialog4 = <span class="keyword">new</span> Dialog();</span><br><span class="line">  dialog4.open(&#123;</span><br><span class="line">    title: <span class="string">'Message'</span>,</span><br><span class="line">    message: tpl,</span><br><span class="line">    isShowCloseBtn: <span class="literal">true</span>,</span><br><span class="line">    isShowConfirmBtn: <span class="literal">true</span>,</span><br><span class="line">    onClose: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      alert(<span class="string">'取消'</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    onConfirm: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      alert(<span class="string">'确定'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>首先实现一个普通的 <code>dialog</code>，前面用过原生 JavaScript 实现过，但是还比较简陋。现在我们用面向对象的写法将其封装成jQuery插件：</p>
+<blockquote>
+<ul>
+<li><p><a href="http://febox.applinzi.com/goDialog/index.html" target="_blank" rel="external">DEMO预览</a></p>
+</li>
+<li><p><a href="https://github.com/licao404/landemo/tree/master/goDialog" target="_blank" rel="external">实现代码</a></p>
+</li>
+</ul>
+</blockquote>
+<p>然后我们在上面的基础上，加入拖拽事件，</p>
+<blockquote>
+<ul>
+<li><p><a href="http://febox.applinzi.com/task37/index.html" target="_blank" rel="external">DEMO预览</a></p>
+</li>
+<li><p><a href="https://github.com/licao404/landemo/tree/master/goDialogdraggable" target="_blank" rel="external">实现代码</a></p>
+</li>
+</ul>
+</blockquote>
+<hr>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E5%8D%9A%E5%AE%A2%E5%BE%AE%E4%BF%A1%E8%AE%A2%E9%98%85%E5%8F%B7.jpg" alt="蓝岚 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果您喜欢，请随意打赏。您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E5%BE%AE%E4%BF%A1%E6%89%93%E8%B5%8F%E9%9A%8F%E6%84%8F.png" alt="蓝岚 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xrvo9.com1.z0.glb.clouddn.com/%E4%BA%8C%E7%BB%B4%E7%A0%81/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%89%93%E8%B5%8F%E9%9A%8F%E6%84%8F.jpg" alt="蓝岚 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/12/原型链/" rel="next" title="说清楚JavaScript的原型链">
+                <i class="fa fa-chevron-left"></i> 说清楚JavaScript的原型链
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/17/前端模块化之旅-因何生它/" rel="prev" title="前端模块化之旅（一）：因何生它">
+                前端模块化之旅（一）：因何生它 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ffc85abe3ee8ee" async = "async" ></script>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/14/原型链后续之JavaScript的继承/"
+           data-title="原型链后续之JavaScript的继承" data-url="http://licao404.com/2016/05/14/原型链后续之JavaScript的继承/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xr868.com1.z0.glb.clouddn.com/me.jpg"
+               alt="蓝岚" />
+          <p class="site-author-name" itemprop="name">蓝岚</p>
+          <p class="site-description motion-element" itemprop="description">一生想做浪漫极客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="Mailto:15720600373@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope-o"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/2806327437/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://coolshell.cn/" title="酷壳" target="_blank">酷壳</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#【理论知识】"><span class="nav-number">1.</span> <span class="nav-text">【理论知识】</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#继承有什么作用"><span class="nav-number">1.1.</span> <span class="nav-text">继承有什么作用? </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#有几种常见创建对象的方式-举例说明"><span class="nav-number">1.2.</span> <span class="nav-text">有几种常见创建对象的方式? 举例说明?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下面两种写法有什么区别"><span class="nav-number">1.3.</span> <span class="nav-text">下面两种写法有什么区别?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Object-create-有什么作用？兼容性如何？如何使用？"><span class="nav-number">1.4.</span> <span class="nav-text">Object.create 有什么作用？兼容性如何？如何使用？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hasOwnProperty-有什么作用？-如何使用？"><span class="nav-number">1.5.</span> <span class="nav-text">hasOwnProperty 有什么作用？ 如何使用？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现-Object-create-的-polyfill，如：（ps-写个-函数create，实现-Object-create-的功能）"><span class="nav-number">1.6.</span> <span class="nav-text">实现 Object.create 的 polyfill，如：（ps: 写个 函数create，实现 Object.create 的功能）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如下代码中-call-的作用是什么"><span class="nav-number">1.7.</span> <span class="nav-text">如下代码中 call 的作用是什么?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#补全代码，实现继承"><span class="nav-number">1.8.</span> <span class="nav-text">补全代码，实现继承</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#【小试牛刀】"><span class="nav-number">2.</span> <span class="nav-text">【小试牛刀】</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现如下可拖拽-dialog-弹窗功能，如下是功能要求"><span class="nav-number">2.1.</span> <span class="nav-text">实现如下可拖拽 dialog 弹窗功能，如下是功能要求</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <!-- <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script> -->
+
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-cogs"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">蓝岚</span>
+  <!-- <span id="busuanzi_container_site_pv" style='display: none'>
+    &nbsp; | &nbsp;您是本站第<span id="busuanzi_value_site_pv"></span>位小伙伴
+</span> -->
+</div>
+
+<div class="powered-by">
+  Power by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+  &nbsp;&nbsp; | &nbsp;&nbsp;<a id="translateLink" href="javascript:translatePage();">繁體</a>
+</div>
+
+<script type="text/javascript" src="http://7xrvo9.com1.z0.glb.clouddn.com/tw_cn.js"></script>
+<script type="text/javascript">
+  var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+  var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+  var cookieDomain = "http://www.licao404.com/"; //Cookie地址, 一定要设定, 通常为你的网址
+  var msgToTraditionalChinese = "繁體"; //此处可以更改为你想要显示的文字
+  var msgToSimplifiedChinese = "简体"; //同上，但两处均不建议更改
+  var translateButtonId = "translateLink"; //默认互换id
+  translateInitilization();
+</script>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"> 本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"licao404"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("eU0wbE0RUcORq7vQxOaLmU26-gzGzoHsz", "Gtpg553mTGDAVFS7WKsPbSA3");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  
+
+
+</body>
+</html>

@@ -12,7 +12,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: /
+url: https://licao404.github.io/
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -104,11 +104,6 @@ avatar: http://7xr868.com1.z0.glb.clouddn.com/me.jpg
 
 # JiaThis 分享服务
 # jiathis: true
-
-#百度统计
-baidu_analytics: 50dccebe8271dcccd782178e2cdbbc52
-# baidusitemap:
-#   path: baidusitemap.xml
   
 #Swiftype Search Key
 # swiftype_key: 7PcwcK-5yqhMrUDyc-y-
